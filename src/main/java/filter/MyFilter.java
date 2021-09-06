@@ -4,20 +4,36 @@ import application.MyApplication;
 import controller.IController;
 import org.thymeleaf.ITemplateEngine;
 
-import javax.servlet.ServletContext;
+import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class MyFilter {
+@WebFilter(urlPatterns = "/*")
+public class MyFilter implements Filter{
     private ServletContext servletContext;
     private MyApplication application;
+
+    public void init(final FilterConfig filterConfig) {
+        this.servletContext = filterConfig.getServletContext();
+        this.application = new MyApplication(this.servletContext);
+    }
+
+    public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) {
+        try {
+            if (!process((HttpServletRequest) request, (HttpServletResponse) response)) {
+                chain.doFilter(request, response);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private boolean process(HttpServletRequest request, HttpServletResponse response) throws Exception {
         if (request.getRequestURI().startsWith("/api")) {
             return false;
         }
         if (request.getRequestURI().endsWith(".css") || request.getRequestURI().startsWith("/images") || request.getRequestURI().startsWith("/favicon") || request.getRequestURI().startsWith("/templates")|| request.getRequestURI().startsWith("/js")) {
-            // System.out.println(request.getRequestURI());
             return false;
         }
         IController controller = this.application.resolveControllerForRequest(request);

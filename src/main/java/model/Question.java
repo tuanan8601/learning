@@ -11,4 +11,5 @@ public class Question {
     List<Answer> answers;
     String solution;
     char solutionHead;
+    String feedback;
 }

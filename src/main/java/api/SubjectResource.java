@@ -17,6 +17,8 @@ public class SubjectResource {
     @Produces({MediaType.APPLICATION_JSON})
     public Subject getSubjectbyID_api(@QueryParam("id") String id){
         Subject subject = subjectService.getSubjectByID(id);
+        subject.setId(null);
+        subject.setObjectiveTest_map(null);
         return subject;
     }
 }

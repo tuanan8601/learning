@@ -12,6 +12,7 @@ public class ObjectiveTest {
     String objectiveTestId;
     String testName;
     ObjectId subject_id;
+    String subjectId;
     String poster;
     List<Question> questions;
 }

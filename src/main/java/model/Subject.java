@@ -15,5 +15,5 @@ public class Subject {
     String name;
     String poster;
     Map<String, ObjectId> objectiveTest_map;
-    Map<String, String> objectiveTest_name_id = new HashMap<>();
+    HashMap<String, String> objectiveTest_name_id = new HashMap<>();
 }

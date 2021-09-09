@@ -20,11 +20,12 @@ public class WelcomeResource {
 
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public Map<String,String> welcome(){
-        Map<String,String> subject_map = new HashMap<>();
-        subjectService.getAllSubject().forEach(d->{
-            subject_map.put(d.getName(),d.getSubjectId());
+    public List<Subject> welcome(){
+        List<Subject> subjects = subjectService.getAllSubject();
+        subjects.forEach(d->{
+            d.setId(null);
+            d.setObjectiveTest_map(null);
         });
-        return subject_map;
+        return subjects;
     }
 }

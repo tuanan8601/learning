@@ -12,9 +12,9 @@ import java.util.List;
 import java.util.Map;
 
 @Path("/")
-public class WelcomeResource {
+public class HomeResource {
     SubjectService subjectService;
-    public WelcomeResource(){
+    public HomeResource(){
         this.subjectService=new SubjectService();
     }
 

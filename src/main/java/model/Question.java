@@ -8,6 +8,7 @@ import java.util.List;
 @Data
 public class Question {
     String title;
+    String image;
     List<Answer> answers;
     String solution;
     char solutionHead;

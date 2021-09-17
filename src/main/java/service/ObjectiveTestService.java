@@ -1,9 +1,7 @@
 package service;
 
-import DAO.ObjectiveTestDAO;
-import DAO.SubjectDAO;
+import DAO.RedisDB.ObjectiveTestDAO;
 import model.ObjectiveTest;
-import model.Subject;
 
 public class ObjectiveTestService {
     public ObjectiveTestDAO objectiveTestDAO;

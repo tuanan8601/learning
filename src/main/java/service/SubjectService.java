@@ -1,6 +1,6 @@
 package service;
 
-import DAO.SubjectDAO;
+import DAO.RedisDB.SubjectDAO;
 import model.Subject;
 
 import java.util.List;

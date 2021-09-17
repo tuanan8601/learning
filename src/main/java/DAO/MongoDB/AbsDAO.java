@@ -1,4 +1,4 @@
-package DAO;
+package DAO.MongoDB;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;

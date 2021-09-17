@@ -7,9 +7,10 @@ import java.util.List;
 
 @Data
 public class Question {
+    String id;
     String title;
     String image;
-    List<Answer> answers;
+    List<Answer> answers = new ArrayList<>();
     String solution;
     char solutionHead;
     String feedback;

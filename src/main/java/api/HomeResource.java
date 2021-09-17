@@ -11,21 +11,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Path("/")
+@Path("/home")
 public class HomeResource {
     SubjectService subjectService;
     public HomeResource(){
         this.subjectService=new SubjectService();
     }
 
+    @Path("/hello-word")
+    @GET
+    @Produces("text/plain")
+    public String hello() {
+        return "Hello, World!";
+    }
+
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public List<Subject> welcome(){
         List<Subject> subjects = subjectService.getAllSubject();
-        subjects.forEach(d->{
-            d.setId(null);
-            d.setObjectiveTest_map(null);
-        });
+//        subjects.forEach(d->{
+//            d.setId(null);
+//            d.setObjectiveTest_map(null);
+//        });
         return subjects;
     }
 }

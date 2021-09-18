@@ -23,7 +23,7 @@ public class SubjectDAO extends AbsDAO implements ISubjectDAO {
         subject.setName(sbjmap.get("name"));
         subject.setType(sbjmap.get("type"));
         subject.setPoster(sbjmap.get("poster"));
-        Iterator<String> oTi = jedis.smembers("objectivetestset:subject:"+id).iterator();
+        Iterator<String> oTi = jedis.zrangeByScore("objectivetestzset:subject:"+id,"-inf","+inf").iterator();
         while(oTi.hasNext()){
             String oT_id = oTi.next();
             subject.getObjectiveTest_name_id().put(jedis.hget("objectivetest:"+oT_id,"testname"),oT_id);

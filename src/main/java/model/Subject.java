@@ -3,10 +3,7 @@ package model;
 import lombok.Data;
 import org.bson.types.ObjectId;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Data
 public class Subject {
@@ -16,5 +13,5 @@ public class Subject {
     String type;
     String poster;
 //    Map<String, ObjectId> objectiveTest_map;
-    HashMap<String, String> objectiveTest_name_id = new HashMap<>();
+    LinkedHashMap<String, String> objectiveTest_name_id = new LinkedHashMap<>();
 }

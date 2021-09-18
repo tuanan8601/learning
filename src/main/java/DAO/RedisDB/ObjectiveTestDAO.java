@@ -31,8 +31,10 @@ public class ObjectiveTestDAO extends AbsDAO {
             question.setId(q_id);
             question.setTitle(qmap.get("title"));
             question.setImage(qmap.get("image"));
-            question.setSolution(qmap.get("solution"));
-            question.setSolutionHead(qmap.get("solutionHead").charAt(0));
+            if(qmap.get("solution")!=null) {
+                question.setSolution(qmap.get("solution"));
+                question.setSolutionHead(qmap.get("solutionHead").charAt(0));
+            }
             question.setFeedback(qmap.get("feedback"));
             long len = jedis.llen("answer:question:"+q_id);
             List<String> answers = jedis.lrange("answer:question:"+q_id,1,len);
@@ -59,6 +61,6 @@ public class ObjectiveTestDAO extends AbsDAO {
 
     public static void main(String[] args) {
         ObjectiveTestDAO objectiveTestDAO = new ObjectiveTestDAO();
-        System.out.println(objectiveTestDAO.getObjectiveTestByID("9"));
+        System.out.println(objectiveTestDAO.getObjectiveTestByID("7"));
     }
 }

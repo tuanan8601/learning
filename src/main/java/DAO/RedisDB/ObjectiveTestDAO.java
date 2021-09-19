@@ -20,9 +20,8 @@ public class ObjectiveTestDAO extends AbsDAO {
         objectiveTest.setTestName(oTmap.get("testname"));
         objectiveTest.setPoster(oTmap.get("poster"));
         objectiveTest.setSubjectId(oTmap.get("subject_id"));
-        Iterator<String> qset = jedis.smembers("questionset:objectivetest:"+id).iterator();
-        while(qset.hasNext()){
-            String q_id = qset.next();
+        List<String> qlist = jedis.sscan("questionset:objectivetest:"+id,0).getResult();
+        for (String q_id : qlist) {
             Map<String,String> qmap = jedis.hgetAll("question:"+q_id);
             Question question = new Question();
             question.setId(q_id);

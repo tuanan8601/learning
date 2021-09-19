@@ -31,13 +31,11 @@ public class SubjectDAO extends AbsDAO implements ISubjectDAO {
 
     public List<Subject> getAllSubject(){
         Jedis jedis = getConnection();
-        Iterator<String> sbji = jedis.keys("subject:*").iterator();
+        Map<String,String> sbj = jedis.hgetAll("subjectindex");
         List<Subject> subjectList= new ArrayList<>();
-        while (sbji.hasNext()){
-            String key = sbji.next();
-            Subject subject = getSubjectByID(key.split(":")[1]);
-            subjectList.add(subject);
-        }
+        sbj.forEach((k,v)->{
+            subjectList.add(getSubjectByID(v));
+        });
 
         return subjectList;
     }

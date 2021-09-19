@@ -6,17 +6,14 @@ import model.Answer;
 import model.ObjectiveTest;
 import model.Question;
 import org.bson.types.ObjectId;
+import redis.clients.jedis.Jedis;
 
 import java.util.*;
-
-import static DAO.RedisDB.AbsDAO.jedis;
 import static com.mongodb.client.model.Filters.eq;
 
 public class ObjectiveTestDAO extends AbsDAO {
-    public ObjectiveTestDAO(){
-        getdb();
-    }
     public ObjectiveTest getObjectiveTestByID(String id) {
+        Jedis jedis = getConnection();
         Map<String,String> oTmap = jedis.hgetAll("objectivetest:"+id);
         ObjectiveTest objectiveTest = new ObjectiveTest();
         objectiveTest.setObjectiveTestId(oTmap.get("id"));

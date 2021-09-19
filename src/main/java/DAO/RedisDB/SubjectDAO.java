@@ -5,18 +5,16 @@ import DAO.RedisDB.AbsDAO;
 import com.mongodb.client.MongoCollection;
 import model.Subject;
 import org.bson.types.ObjectId;
+import redis.clients.jedis.Jedis;
 
 import java.util.*;
 
-import static DAO.RedisDB.AbsDAO.jedis;
 import static com.mongodb.client.model.Filters.eq;
 
 public class SubjectDAO extends AbsDAO implements ISubjectDAO {
-    public SubjectDAO(){
-        getdb();
-    }
     @Override
     public Subject getSubjectByID(String id) {
+        Jedis jedis = getConnection();
         Map<String,String> sbjmap = jedis.hgetAll("subject:"+id);
         Subject subject = new Subject();
         subject.setSubjectId(sbjmap.get("id"));
@@ -32,6 +30,7 @@ public class SubjectDAO extends AbsDAO implements ISubjectDAO {
     }
 
     public List<Subject> getAllSubject(){
+        Jedis jedis = getConnection();
         Iterator<String> sbji = jedis.keys("subject:*").iterator();
         List<Subject> subjectList= new ArrayList<>();
         while (sbji.hasNext()){

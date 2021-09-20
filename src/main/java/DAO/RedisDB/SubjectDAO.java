@@ -1,11 +1,9 @@
 package DAO.RedisDB;
 
 import DAO.ISubjectDAO;
-import DAO.RedisDB.AbsDAO;
-import com.mongodb.client.MongoCollection;
 import model.Subject;
-import org.bson.types.ObjectId;
-import redis.clients.jedis.Jedis;
+import redis.clients.jedis.ScanParams;
+import redis.clients.jedis.Tuple;
 
 import java.util.*;
 
@@ -14,33 +12,37 @@ import static com.mongodb.client.model.Filters.eq;
 public class SubjectDAO extends AbsDAO implements ISubjectDAO {
     @Override
     public Subject getSubjectByID(String id) {
-        Map<String,String> sbjmap = jedis.hgetAll("subject:"+id);
+        List<Map.Entry<String,String>> sbjmap = jedis.hscan("subject:"+id,0).getResult();
         Subject subject = new Subject();
-        subject.setSubjectId(sbjmap.get("id"));
-        subject.setName(sbjmap.get("name"));
-        subject.setType(sbjmap.get("type"));
-        subject.setPoster(sbjmap.get("poster"));
-        Iterator<String> oTi = jedis.zrangeByScore("objectivetestzset:subject:"+id,"-inf","+inf").iterator();
-        while(oTi.hasNext()){
-            String oT_id = oTi.next();
-            subject.getObjectiveTest_name_id().put(jedis.hget("objectivetest:"+oT_id,"testname"),oT_id);
+        for(Map.Entry<String,String> sbjentry:sbjmap) {
+            if (sbjentry.getKey().equals("id")) subject.setSubjectId(sbjentry.getValue());
+            if (sbjentry.getKey().equals("name")) subject.setName(sbjentry.getValue());
+            if (sbjentry.getKey().equals("type")) subject.setType(sbjentry.getValue());
+            if (sbjentry.getKey().equals("poster")) subject.setPoster(sbjentry.getValue());
+        }
+        List<Tuple> oTzset = jedis.zscan("objectivetestzset:subject:" + id, 0).getResult();
+        for (Tuple oT_tuple : oTzset){
+            String oT_id = oT_tuple.getElement();
+            String testname =jedis.hscan("objectivetest:"+oT_id,0,new ScanParams().match("testname")).getResult().get(0).getValue();
+            subject.getObjectiveTest_name_id().put(testname, oT_id);
         }
         return subject;
     }
 
     public List<Subject> getAllSubject(){
-        Map<String,String> sbj = jedis.hgetAll("subjectindex");
+        List<Map.Entry<String,String>> sbj = jedis.hscan("subjectindex",0).getResult();
         List<Subject> subjectList= new ArrayList<>();
-        sbj.forEach((k,v)->{
+        sbj.forEach(e->{
             Subject subject = new Subject();
-            Map<String,String> sbjmap = jedis.hgetAll("subject:"+v);
-            subject.setName(k);
-            subject.setSubjectId(v);
-            subject.setPoster(sbjmap.get("poster"));
-            subject.setType(sbjmap.get("type"));
+            List<Map.Entry<String,String>> sbjmap = jedis.hscan("subject:"+e.getValue(),0).getResult();
+            subject.setName(e.getKey());
+            subject.setSubjectId(e.getValue());
+            sbjmap.forEach(sbje->{
+                if(sbje.getKey().equals("poster")) subject.setPoster(sbje.getValue());
+                if(sbje.getKey().equals("type")) subject.setType(sbje.getValue());
+            });
             subjectList.add(subject);
         });
-
         return subjectList;
     }
 
@@ -60,7 +62,7 @@ public class SubjectDAO extends AbsDAO implements ISubjectDAO {
     }
 
     public static void main(String[] args) {
-        System.out.println(new SubjectDAO().getSubjectByID("2"));
+//        System.out.println(new SubjectDAO().getSubjectByID("2"));
         System.out.println(new SubjectDAO().getAllSubject());
     }
 }

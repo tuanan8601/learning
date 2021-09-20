@@ -13,24 +13,25 @@ import static com.mongodb.client.model.Filters.eq;
 
 public class ObjectiveTestDAO extends AbsDAO {
     public ObjectiveTest getObjectiveTestByID(String id) {
-        Map<String,String> oTmap = jedis.hgetAll("objectivetest:"+id);
+        List<Map.Entry<String,String>> oTmap = jedis.hscan("objectivetest:"+id,0).getResult();
         ObjectiveTest objectiveTest = new ObjectiveTest();
-        objectiveTest.setObjectiveTestId(oTmap.get("id"));
-        objectiveTest.setTestName(oTmap.get("testname"));
-        objectiveTest.setPoster(oTmap.get("poster"));
-        objectiveTest.setSubjectId(oTmap.get("subject_id"));
+        oTmap.forEach(e->{
+            if(e.getKey().equals("id")) objectiveTest.setObjectiveTestId(e.getValue());
+            if(e.getKey().equals("testname")) objectiveTest.setTestName(e.getValue());
+            if(e.getKey().equals("poster")) objectiveTest.setPoster(e.getValue());
+            if(e.getKey().equals("subject_id")) objectiveTest.setSubjectId(e.getValue());
+        });
         List<String> qlist = jedis.sscan("questionset:objectivetest:"+id,0).getResult();
         for (String q_id : qlist) {
-            Map<String,String> qmap = jedis.hgetAll("question:"+q_id);
+            List<Map.Entry<String,String>> qmap = jedis.hscan("question:"+q_id,0).getResult();
             Question question = new Question();
             question.setId(q_id);
-            question.setTitle(qmap.get("title"));
-            question.setImage(qmap.get("image"));
-            if(qmap.get("solution")!=null) {
-                question.setSolution(qmap.get("solution"));
-                question.setSolutionHead(qmap.get("solutionHead").charAt(0));
-            }
-            question.setFeedback(qmap.get("feedback"));
+            qmap.forEach(qe->{
+                if(qe.getKey().equals("title")) question.setTitle(qe.getValue());
+                if(qe.getKey().equals("solution")) question.setSolution(qe.getValue());
+                if(qe.getKey().equals("solutionHead")) question.setSolutionHead(qe.getValue().charAt(0));
+                if(qe.getKey().equals("feedback")) question.setFeedback(qe.getValue());
+            });
             long len = jedis.llen("answer:question:"+q_id);
             List<String> answers = jedis.lrange("answer:question:"+q_id,1,len);
             Collections.reverse(answers);

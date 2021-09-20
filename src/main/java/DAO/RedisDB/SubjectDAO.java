@@ -14,7 +14,6 @@ import static com.mongodb.client.model.Filters.eq;
 public class SubjectDAO extends AbsDAO implements ISubjectDAO {
     @Override
     public Subject getSubjectByID(String id) {
-        Jedis jedis = getConnection();
         Map<String,String> sbjmap = jedis.hgetAll("subject:"+id);
         Subject subject = new Subject();
         subject.setSubjectId(sbjmap.get("id"));
@@ -30,7 +29,6 @@ public class SubjectDAO extends AbsDAO implements ISubjectDAO {
     }
 
     public List<Subject> getAllSubject(){
-        Jedis jedis = getConnection();
         Map<String,String> sbj = jedis.hgetAll("subjectindex");
         List<Subject> subjectList= new ArrayList<>();
         sbj.forEach((k,v)->{

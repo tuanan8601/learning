@@ -13,7 +13,6 @@ import static com.mongodb.client.model.Filters.eq;
 
 public class ObjectiveTestDAO extends AbsDAO {
     public ObjectiveTest getObjectiveTestByID(String id) {
-        Jedis jedis = getConnection();
         Map<String,String> oTmap = jedis.hgetAll("objectivetest:"+id);
         ObjectiveTest objectiveTest = new ObjectiveTest();
         objectiveTest.setObjectiveTestId(oTmap.get("id"));

@@ -9,7 +9,7 @@ public abstract class AbsDAO {
     Jedis getConnection() throws JedisException {
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
         JedisPool pool = new JedisPool(jedisPoolConfig,"redis-18337.c233.eu-west-1-1.ec2.cloud.redislabs.com",
-                18337,100,"fourin1234");
+                18337,1000,"fourin1234");
         Jedis jedis = pool.getResource();
 
 //        Jedis jedis = new Jedis("redis-18337.c233.eu-west-1-1.ec2.cloud.redislabs.com", 18337);

@@ -62,7 +62,7 @@ public class SubjectDAO extends AbsDAO implements ISubjectDAO {
     }
 
     public static void main(String[] args) {
-//        System.out.println(new SubjectDAO().getSubjectByID("2"));
+        System.out.println(new SubjectDAO().getSubjectByID("2"));
         System.out.println(new SubjectDAO().getAllSubject());
     }
 }

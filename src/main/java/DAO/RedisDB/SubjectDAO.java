@@ -34,7 +34,13 @@ public class SubjectDAO extends AbsDAO implements ISubjectDAO {
         Map<String,String> sbj = jedis.hgetAll("subjectindex");
         List<Subject> subjectList= new ArrayList<>();
         sbj.forEach((k,v)->{
-            subjectList.add(getSubjectByID(v));
+            Subject subject = new Subject();
+            Map<String,String> sbjmap = jedis.hgetAll("subject:"+v);
+            subject.setName(k);
+            subject.setSubjectId(v);
+            subject.setPoster(sbjmap.get("poster"));
+            subject.setType(sbjmap.get("type"));
+            subjectList.add(subject);
         });
 
         return subjectList;

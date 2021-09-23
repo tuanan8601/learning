@@ -28,6 +28,7 @@ public class ObjectiveTestDAO extends AbsDAO {
             question.setId(q_id);
             qmap.forEach(qe->{
                 if(qe.getKey().equals("title")) question.setTitle(qe.getValue());
+                if(qe.getKey().equals("image")) question.setImage(qe.getValue());
                 if(qe.getKey().equals("solution")) question.setSolution(qe.getValue());
                 if(qe.getKey().equals("solutionHead")) question.setSolutionHead(qe.getValue().charAt(0));
                 if(qe.getKey().equals("feedback")) question.setFeedback(qe.getValue());

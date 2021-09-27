@@ -14,4 +14,6 @@ public class Subject {
     String poster;
 //    Map<String, ObjectId> objectiveTest_map;
     LinkedHashMap<String, String> objectiveTest_name_id = new LinkedHashMap<>();
+//    ObjectId document_id;
+    String document_id;
 }

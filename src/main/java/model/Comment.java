@@ -16,7 +16,7 @@ public class Comment {
 //    private ObjectId objectiveTest_id;
     String objectiveTest_id;
     private Date date;
-    public String getTimeAgo() {
-        return MyTime.timeAgo(new Date(), date);
-    }
+//    public String getTimeAgo() {
+//        return MyTime.timeAgo(new Date(), date);
+//    }
 }

@@ -14,7 +14,7 @@ public class CommentService {
         this.commentDAO = new CommentDAO();
     }
     public List<Comment> getComments(String objectiveTest_id) {
-        List<Comment> list = new CommentDAO().getComments(objectiveTest_id);
+        List<Comment> list = commentDAO.getComments(objectiveTest_id);
         return list;
     }
 

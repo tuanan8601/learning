@@ -39,6 +39,7 @@ public class CommentDAO extends AbsDAO {
 
     public void addComment(Comment comment) {
         comment.setId(CommentDAO.getMaxIndex("comment",jedis)+1+"");
+        comment.setDate(new Date());
 
         Map<String,String> map = new HashMap<>();
         map.put("id",String.valueOf(comment.getId()));
@@ -46,7 +47,7 @@ public class CommentDAO extends AbsDAO {
         map.put("email",comment.getEmail());
         map.put("text",comment.getText());
         map.put("objectiveTest_id",String.valueOf(comment.getObjectiveTest_id()));
-        map.put("date",String.valueOf(new Date().getTime()));
+        map.put("date",String.valueOf(comment.getDate().getTime()));
         System.out.println(map);
         jedis.hmset("comment:"+comment.getId(),map);
         jedis.zadd("commentzset:objectivetest:"+comment.getObjectiveTest_id(),comment.getDate().getTime(),""+comment.getId());

@@ -7,16 +7,6 @@ import redis.clients.jedis.Tuple;
 import java.util.*;
 
 public class CommentDAO extends AbsDAO {
-    public static long getMaxIndex(String objectname, Jedis jedis){
-        HashSet<String> list = (HashSet<String>) jedis.keys(objectname+":*");
-        List<Long> index = new ArrayList<>();
-        list.forEach(d->{
-            int length = d.split(":").length;
-            index.add(Long.parseLong(d.split(":")[length-1]));
-        });
-        index.add(0L);
-        return Collections.max(index);
-    }
     public List<Comment> getComments(String objectiveTest_id) {
         List<Comment> list = new ArrayList<>();
         List<Tuple> comments = jedis.zscan("commentzset:objectivetest:"+objectiveTest_id,0).getResult();
@@ -38,7 +28,9 @@ public class CommentDAO extends AbsDAO {
     }
 
     public void addComment(Comment comment) {
-        comment.setId(CommentDAO.getMaxIndex("comment",jedis)+1+"");
+        if(jedis.get("maxcomment")==null)
+            comment.setId("0");
+        else comment.setId(jedis.get("maxcomment")+1);
         comment.setDate(new Date());
 
         Map<String,String> map = new HashMap<>();
@@ -49,6 +41,7 @@ public class CommentDAO extends AbsDAO {
         map.put("objectiveTest_id",String.valueOf(comment.getObjectiveTest_id()));
         map.put("date",String.valueOf(comment.getDate().getTime()));
         System.out.println(map);
+        jedis.set("maxcomment",comment.getId());
         jedis.hmset("comment:"+comment.getId(),map);
         jedis.zadd("commentzset:objectivetest:"+comment.getObjectiveTest_id(),comment.getDate().getTime(),""+comment.getId());
     }

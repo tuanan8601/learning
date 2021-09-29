@@ -9,7 +9,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-@Path("/objectivetest/comment")
+@Path("/comment")
 public class CommentResource {
     CommentService commentService;
     public CommentResource(){

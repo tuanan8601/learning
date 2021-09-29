@@ -38,6 +38,8 @@ public class CommentDAO extends AbsDAO {
     }
 
     public void addComment(Comment comment) {
+        comment.setId(CommentDAO.getMaxIndex("comment",jedis)+1+"");
+
         Map<String,String> map = new HashMap<>();
         map.put("id",String.valueOf(comment.getId()));
         map.put("name",comment.getName());
@@ -53,14 +55,13 @@ public class CommentDAO extends AbsDAO {
     public static void main(String[] args) {
 //        System.out.println(new CommentDAO().getComments("4"));
 
-//        Comment comment = new Comment();
-//        comment.setEmail("tuanan8601@gmail.com");
-//        comment.setId(CommentDAO.getMaxIndex("comment",jedis)+1+"");
-//        comment.setName("Tuấn An Nguyễn");
-//        comment.setText("Thank you");
-//        comment.setObjectiveTest_id("4");
-//        comment.setDate(new Date());
-//        System.out.println(comment);
-//        new CommentDAO().addComment(comment);
+        Comment comment = new Comment();
+        comment.setEmail("tuanan8601@gmail.com");
+        comment.setName("Tuấn An Nguyễn");
+        comment.setText("Wow");
+        comment.setObjectiveTest_id("4");
+        comment.setDate(new Date());
+        System.out.println(comment);
+        new CommentDAO().addComment(comment);
     }
 }

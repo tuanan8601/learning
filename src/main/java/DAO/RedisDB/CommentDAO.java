@@ -53,15 +53,15 @@ public class CommentDAO extends AbsDAO {
     }
 
     public static void main(String[] args) {
-//        System.out.println(new CommentDAO().getComments("4"));
+        System.out.println(new CommentDAO().getComments("4"));
 
-        Comment comment = new Comment();
-        comment.setEmail("tuanan8601@gmail.com");
-        comment.setName("Tuấn An Nguyễn");
-        comment.setText("Wow");
-        comment.setObjectiveTest_id("4");
-        comment.setDate(new Date());
-        System.out.println(comment);
-        new CommentDAO().addComment(comment);
+//        Comment comment = new Comment();
+//        comment.setEmail("tuanan8601@gmail.com");
+//        comment.setName("Tuấn An Nguyễn");
+//        comment.setText("T không làm được Câu 4 :(");
+//        comment.setObjectiveTest_id("4");
+//        comment.setDate(new Date());
+//        System.out.println(comment);
+//        new CommentDAO().addComment(comment);
     }
 }

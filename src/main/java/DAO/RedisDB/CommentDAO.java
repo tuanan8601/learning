@@ -46,7 +46,7 @@ public class CommentDAO extends AbsDAO {
         map.put("email",comment.getEmail());
         map.put("text",comment.getText());
         map.put("objectiveTest_id",String.valueOf(comment.getObjectiveTest_id()));
-        map.put("date",String.valueOf(comment.getDate().getTime()));
+        map.put("date",String.valueOf(new Date().getTime()));
         System.out.println(map);
         jedis.hmset("comment:"+comment.getId(),map);
         jedis.zadd("commentzset:objectivetest:"+comment.getObjectiveTest_id(),comment.getDate().getTime(),""+comment.getId());
@@ -60,7 +60,6 @@ public class CommentDAO extends AbsDAO {
 //        comment.setName("Tuấn An Nguyễn");
 //        comment.setText("T không làm được Câu 4 :(");
 //        comment.setObjectiveTest_id("4");
-//        comment.setDate(new Date());
 //        System.out.println(comment);
 //        new CommentDAO().addComment(comment);
     }

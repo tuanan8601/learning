@@ -30,7 +30,7 @@ public class CommentDAO extends AbsDAO {
                 if(c.getKey().equals("email")) comment.setEmail(c.getValue());
                 if(c.getKey().equals("text")) comment.setText(c.getValue());
                 if(c.getKey().equals("objectiveTest_id")) comment.setObjectiveTest_id(c.getValue());
-                if(c.getKey().equals("date")) comment.setDate(new Date(Long.parseLong(c.getValue())*1000L));
+                if(c.getKey().equals("date")) comment.setDate(new Date(Long.parseLong(c.getValue())));
             });
             list.add(comment);
         });

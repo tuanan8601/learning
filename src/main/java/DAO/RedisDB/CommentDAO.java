@@ -30,7 +30,7 @@ public class CommentDAO extends AbsDAO {
     public void addComment(Comment comment) {
         if(jedis.get("maxcomment")==null)
             comment.setId("0");
-        else comment.setId(jedis.get("maxcomment")+1);
+        else comment.setId(Long.parseLong(jedis.get("maxcomment"))+1+"");
         comment.setDate(new Date());
 
         Map<String,String> map = new HashMap<>();

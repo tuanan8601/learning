@@ -19,7 +19,7 @@ public class CommentService {
     }
 
     public String addComment(Comment comment) {
-        new CommentDAO().addComment(comment);
+        commentDAO.addComment(comment);
         return "";
     }
 }

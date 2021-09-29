@@ -5,10 +5,7 @@ import model.ObjectiveTest;
 import service.CommentService;
 import service.ObjectiveTestService;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -24,5 +21,12 @@ public class CommentResource {
     public List<Comment> getComments(@QueryParam("id") String id){
         List<Comment> comments = commentService.getComments(id);
         return comments;
+    }
+
+    @POST
+    @Path("/add")
+    public String addComment(Comment comment) {
+        commentService.addComment(comment);
+        return "";
     }
 }

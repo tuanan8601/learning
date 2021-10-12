@@ -34,7 +34,7 @@ public class ObjectiveTestDAO extends AbsDAO {
                 if(qe.getKey().equals("feedback")) question.setFeedback(qe.getValue());
             });
             long len = jedis.llen("answer:question:"+q_id);
-            List<String> answers = jedis.lrange("answer:question:"+q_id,1,len);
+            List<String> answers = jedis.lrange("answer:question:"+q_id,0,len-1);
             Collections.reverse(answers);
             answers.forEach(d->{
                 Answer answer = new Answer();

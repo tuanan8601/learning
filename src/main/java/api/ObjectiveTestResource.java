@@ -23,4 +23,13 @@ public class ObjectiveTestResource {
 //        objectiveTest.setSubject_id(null);
         return objectiveTest;
     }
+    @Path("/random")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public ObjectiveTest getObjectiveTestbyID_api(@QueryParam("id") String id,@QueryParam("num")String num){
+        ObjectiveTest objectiveTest = objectiveTestService.getRandomQuestions(id,Integer.parseInt(num));
+//        objectiveTest.setId(null);
+//        objectiveTest.setSubject_id(null);
+        return objectiveTest;
+    }
 }

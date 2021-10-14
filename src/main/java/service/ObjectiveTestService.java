@@ -12,4 +12,8 @@ public class ObjectiveTestService {
         ObjectiveTest objectiveTest = objectiveTestDAO.getObjectiveTestByID(id);
         return objectiveTest;
     }
+    public ObjectiveTest getRandomQuestions(String id,int num){
+        ObjectiveTest objectiveTest = objectiveTestDAO.getRandomQuestions(id,num);
+        return objectiveTest;
+    }
 }

@@ -21,11 +21,13 @@ public class SubjectDAO extends AbsDAO implements ISubjectDAO {
             if (sbjentry.getKey().equals("poster")) subject.setPoster(sbjentry.getValue());
         }
         List<Tuple> oTzset = jedis.zscan("objectivetestzset:subject:" + id, 0).getResult();
-        for (Tuple oT_tuple : oTzset){
+
+        for (Tuple oT_tuple : oTzset) {
             String oT_id = oT_tuple.getElement();
-            String testname =jedis.hscan("objectivetest:"+oT_id,0,new ScanParams().match("testname")).getResult().get(0).getValue();
+            String testname = jedis.hscan("objectivetest:" + oT_id, 0, new ScanParams().match("testname")).getResult().get(0).getValue();
             subject.getObjectiveTest_name_id().put(testname, oT_id);
         }
+
         return subject;
     }
 
@@ -62,7 +64,7 @@ public class SubjectDAO extends AbsDAO implements ISubjectDAO {
     }
 
     public static void main(String[] args) {
-        System.out.println(new SubjectDAO().getSubjectByID("2"));
-        System.out.println(new SubjectDAO().getAllSubject());
+        System.out.println(new SubjectDAO().getSubjectByID("4"));
+//        System.out.println(new SubjectDAO().getAllSubject());
     }
 }

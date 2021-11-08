@@ -1,7 +1,6 @@
 package DAO.RedisDB;
 
 import model.Comment;
-import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Tuple;
 
 import java.util.*;

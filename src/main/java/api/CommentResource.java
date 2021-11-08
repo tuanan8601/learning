@@ -1,9 +1,7 @@
 package api;
 
 import model.Comment;
-import model.ObjectiveTest;
 import service.CommentService;
-import service.ObjectiveTestService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

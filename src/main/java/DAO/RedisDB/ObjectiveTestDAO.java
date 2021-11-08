@@ -3,9 +3,7 @@ package DAO.RedisDB;
 import DAO.RedisDB.AbsDAO;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.lang.Nullable;
-import model.Answer;
-import model.ObjectiveTest;
-import model.Question;
+import model.*;
 import org.bson.types.ObjectId;
 import redis.clients.jedis.Jedis;
 
@@ -86,6 +84,48 @@ public class ObjectiveTestDAO extends AbsDAO {
         return objectiveTest;
     }
 
+    public boolean checkQuestionbyID(FormAnswer formAnswer) {
+        String solution=jedis.hget("question:"+formAnswer.getQid(),"solution");
+        return formAnswer.getAnswerHead()==solution.charAt(0);
+    }
+
+    public Question getQuestionbyID(String id){
+        Question question=new Question();
+        List<Map.Entry<String,String>> qmap = jedis.hscan("question:"+id,0).getResult();
+        question.setId(id);
+        qmap.forEach(qe->{
+            if(qe.getKey().equals("title")) question.setTitle(qe.getValue());
+            if(qe.getKey().equals("image")) question.setImage(qe.getValue());
+            if(qe.getKey().equals("solution")) question.setSolution(qe.getValue());
+            if(qe.getKey().equals("solutionHead")) question.setSolutionHead(qe.getValue().charAt(0));
+            if(qe.getKey().equals("feedback")) question.setFeedback(qe.getValue());
+        });
+        long len = jedis.llen("answer:question:"+id);
+        List<String> answers = jedis.lrange("answer:question:"+id,0,len-1);
+        Collections.reverse(answers);
+        answers.forEach(d->{
+            Answer answer = new Answer();
+            answer.setAnswer(d);
+            answer.setAnswerHead(d.charAt(0));
+            question.getAnswers().add(answer);
+        });
+        return question;
+    }
+
+    public TestResult checkObjectiveTest(List<FormAnswer> formAnswerList){
+        TestResult testResult = new TestResult();
+        testResult.setTotalScore(formAnswerList.size());
+        int score=0;
+        for (FormAnswer f : formAnswerList) {
+            f.setCheck(checkQuestionbyID(f));
+            if(f.getCheck()) score++;
+            f.setQuestion(getQuestionbyID(f.getQid()));
+        }
+        testResult.setFormAnswerList(formAnswerList);
+        testResult.setScore(score);
+        return testResult;
+    }
+
     public List<ObjectiveTest> searchObjectiveTest(Map filter, Map sort, int limit, int skip) {
         return null;
     }
@@ -96,6 +136,11 @@ public class ObjectiveTestDAO extends AbsDAO {
 
     public static void main(String[] args) {
         ObjectiveTestDAO objectiveTestDAO = new ObjectiveTestDAO();
-        System.out.println(objectiveTestDAO.getObjectiveTestByID("7"));
+//        System.out.println(objectiveTestDAO.getObjectiveTestByID("7"));
+//        System.out.println(objectiveTestDAO.getRandomQuestions("7",5));
+        FormAnswer formAnswer = new FormAnswer();
+        formAnswer.setQid("62");
+        formAnswer.setAnswerHead('A');
+        System.out.println(objectiveTestDAO.checkQuestionbyID(formAnswer));
     }
 }

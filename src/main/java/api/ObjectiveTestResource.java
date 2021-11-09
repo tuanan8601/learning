@@ -45,11 +45,14 @@ public class ObjectiveTestResource {
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
     public TestResult checkTest(String testForm) {
         String testName = new String();
+        int time = 0, dotime = 0;
         System.out.println(testForm);
         List<FormAnswer> formAnswerList = new ArrayList<>();
         List<String> forms = Arrays.asList(testForm.split("&"));
         System.out.println(forms);
         for (String d : forms) {
+            if(d.startsWith("time")) time=Integer.parseInt(d.substring(d.indexOf("=") + 1));
+            if(d.startsWith("dotime")) dotime=Integer.parseInt(d.substring(d.indexOf("=") + 1));
             if (d.startsWith("testName")) testName=d.substring(d.indexOf("=") + 1);
             if (d.startsWith("qid")) {
                 FormAnswer formAnswer = new FormAnswer();
@@ -71,6 +74,8 @@ public class ObjectiveTestResource {
         System.out.println(formAnswerList);
         TestResult testResult = objectiveTestService.checkObjectiveTest(formAnswerList);
         testResult.setTestName(testName);
+        testResult.setTime(time);
+        testResult.setDotime(dotime);
         return testResult;
     }
 }

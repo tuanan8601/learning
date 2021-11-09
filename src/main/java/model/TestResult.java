@@ -11,5 +11,7 @@ public class TestResult {
     String testName;
     int score;
     int totalScore;
+    int time;
+    int dotime;
     List<FormAnswer> formAnswerList = new ArrayList<>();
 }

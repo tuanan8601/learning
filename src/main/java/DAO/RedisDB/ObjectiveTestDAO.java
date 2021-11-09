@@ -86,7 +86,9 @@ public class ObjectiveTestDAO extends AbsDAO {
 
     public boolean checkQuestionbyID(FormAnswer formAnswer) {
         String solution=jedis.hget("question:"+formAnswer.getQid(),"solution");
-        return formAnswer.getAnswerHead()==solution.charAt(0);
+        if(solution!=null)
+            return formAnswer.getAnswerHead()==solution.charAt(0);
+        else return false;
     }
 
     public Question getQuestionbyID(String id){

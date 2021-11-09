@@ -140,11 +140,11 @@ public class ObjectiveTestDAO extends AbsDAO {
 
     public static void main(String[] args) {
         ObjectiveTestDAO objectiveTestDAO = new ObjectiveTestDAO();
-//        System.out.println(objectiveTestDAO.getObjectiveTestByID("7"));
+        System.out.println(objectiveTestDAO.getObjectiveTestByID("7"));
 //        System.out.println(objectiveTestDAO.getRandomQuestions("7",5));
-        FormAnswer formAnswer = new FormAnswer();
-        formAnswer.setQid("62");
-        formAnswer.setAnswerHead('A');
-        System.out.println(objectiveTestDAO.checkQuestionbyID(formAnswer));
+//        FormAnswer formAnswer = new FormAnswer();
+//        formAnswer.setQid("62");
+//        formAnswer.setAnswerHead('A');
+//        System.out.println(objectiveTestDAO.checkQuestionbyID(formAnswer));
     }
 }

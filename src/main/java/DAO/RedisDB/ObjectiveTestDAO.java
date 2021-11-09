@@ -17,6 +17,7 @@ public class ObjectiveTestDAO extends AbsDAO {
         oTmap.forEach(e->{
             if(e.getKey().equals("id")) objectiveTest.setObjectiveTestId(e.getValue());
             if(e.getKey().equals("testname")) objectiveTest.setTestName(e.getValue());
+            if(e.getKey().equals("time")) objectiveTest.setTime(Integer.parseInt(e.getValue()));
             if(e.getKey().equals("poster")) objectiveTest.setPoster(e.getValue());
             if(e.getKey().equals("subject_id")) objectiveTest.setSubjectId(e.getValue());
         });
@@ -54,6 +55,7 @@ public class ObjectiveTestDAO extends AbsDAO {
         oTmap.forEach(e->{
             if(e.getKey().equals("id")) objectiveTest.setObjectiveTestId(e.getValue());
             if(e.getKey().equals("testname")) objectiveTest.setTestName(e.getValue());
+            if(e.getKey().equals("time")) objectiveTest.setTime(Integer.parseInt(e.getValue()));
             if(e.getKey().equals("poster")) objectiveTest.setPoster(e.getValue());
             if(e.getKey().equals("subject_id")) objectiveTest.setSubjectId(e.getValue());
         });

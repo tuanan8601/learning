@@ -8,6 +8,8 @@ public class FormAnswer {
     char answerHead;
     boolean check;
     Question question;
+    int time;
+    int dotime;
 
     public boolean getCheck() {
         return check;

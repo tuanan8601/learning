@@ -6,6 +6,7 @@ import service.SubjectService;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +30,18 @@ public class HomeResource {
     @Produces({MediaType.APPLICATION_JSON})
     public List<Subject> welcome(){
         List<Subject> subjects = subjectService.getAllSubject();
+//        subjects.forEach(d->{
+//            d.setId(null);
+//            d.setObjectiveTest_map(null);
+//        });
+        return subjects;
+    }
+
+    @Path("/search")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Subject> search(@QueryParam("text") String name){
+        List<Subject> subjects = subjectService.searchSubject(name,0,0);
 //        subjects.forEach(d->{
 //            d.setId(null);
 //            d.setObjectiveTest_map(null);

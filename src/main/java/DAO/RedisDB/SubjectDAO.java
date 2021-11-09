@@ -54,17 +54,34 @@ public class SubjectDAO extends AbsDAO implements ISubjectDAO {
     }
 
     @Override
-    public List<Subject> searchSubject(Map filter, Map sort, int limit, int skip) {
-        return null;
+    public List<Subject> searchSubject(String name, int limit, int skip) {
+        name=name.replace(' ','*');
+        ScanParams scanParams = new ScanParams();
+        scanParams.match("*"+name+"*");
+        List<Map.Entry<String,String>> sbj = jedis.hscan("subjectindex",0,scanParams).getResult();
+        List<Subject> subjectList= new ArrayList<>();
+        sbj.forEach(e->{
+            Subject subject = new Subject();
+            List<Map.Entry<String,String>> sbjmap = jedis.hscan("subject:"+e.getValue(),0).getResult();
+            subject.setName(e.getKey());
+            subject.setSubjectId(e.getValue());
+            sbjmap.forEach(sbje->{
+                if(sbje.getKey().equals("poster")) subject.setPoster(sbje.getValue());
+                if(sbje.getKey().equals("type")) subject.setType(sbje.getValue());
+            });
+            subjectList.add(subject);
+        });
+        return subjectList;
     }
 
     @Override
-    public long getSubjectNumber(Map filter) {
+    public long getSubjectNumber(String name) {
         return 0;
     }
 
     public static void main(String[] args) {
         System.out.println(new SubjectDAO().getSubjectByID("4"));
 //        System.out.println(new SubjectDAO().getAllSubject());
+        System.out.println(new SubjectDAO().searchSubject("Pháp",0,0));
     }
 }

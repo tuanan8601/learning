@@ -55,12 +55,18 @@ public class SubjectDAO extends AbsDAO implements ISubjectDAO {
 
     @Override
     public List<Subject> searchSubject(String name, int limit, int skip) {
-        name=name.replace(' ','*');
+        String text1 = null;
+        if (Character.isUpperCase(name.charAt(0))) text1=name.substring(0,1).toLowerCase()+name.substring(1);
+        if (Character.isLowerCase(name.charAt(0))) text1=name.substring(0,1).toUpperCase()+name.substring(1);
+        text1=text1.replace(' ','*');
+        String text=name.replace(' ','*');
         ScanParams scanParams = new ScanParams();
-        scanParams.match("*"+name+"*");
+        scanParams.match("*"+text+"*");
         List<Map.Entry<String,String>> sbj = jedis.hscan("subjectindex",0,scanParams).getResult();
+        scanParams.match("*"+text1+"*");
+        sbj.addAll(jedis.hscan("subjectindex",0,scanParams).getResult());
         List<Subject> subjectList= new ArrayList<>();
-        sbj.forEach(e->{
+        for (Map.Entry<String,String> e : sbj) {
             Subject subject = new Subject();
             List<Map.Entry<String,String>> sbjmap = jedis.hscan("subject:"+e.getValue(),0).getResult();
             subject.setName(e.getKey());
@@ -70,7 +76,7 @@ public class SubjectDAO extends AbsDAO implements ISubjectDAO {
                 if(sbje.getKey().equals("type")) subject.setType(sbje.getValue());
             });
             subjectList.add(subject);
-        });
+        }
         return subjectList;
     }
 
@@ -82,6 +88,6 @@ public class SubjectDAO extends AbsDAO implements ISubjectDAO {
     public static void main(String[] args) {
         System.out.println(new SubjectDAO().getSubjectByID("4"));
 //        System.out.println(new SubjectDAO().getAllSubject());
-        System.out.println(new SubjectDAO().searchSubject("Pháp",0,0));
+        System.out.println(new SubjectDAO().searchSubject("pháp",0,0));
     }
 }

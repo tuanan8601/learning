@@ -116,20 +116,6 @@ public class ObjectiveTestDAO extends AbsDAO {
         return question;
     }
 
-    public TestResult checkObjectiveTest(List<FormAnswer> formAnswerList){
-        TestResult testResult = new TestResult();
-        testResult.setTotalScore(formAnswerList.size());
-        int score=0;
-        for (FormAnswer f : formAnswerList) {
-            f.setCheck(checkQuestionbyID(f));
-            if(f.getCheck()) score++;
-            f.setQuestion(getQuestionbyID(f.getQid()));
-        }
-        testResult.setFormAnswerList(formAnswerList);
-        testResult.setScore(score);
-        return testResult;
-    }
-
     public List<ObjectiveTest> searchObjectiveTest(Map filter, Map sort, int limit, int skip) {
         return null;
     }

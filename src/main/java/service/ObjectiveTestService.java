@@ -22,7 +22,16 @@ public class ObjectiveTestService {
         return objectiveTest;
     }
     public TestResult checkObjectiveTest(List<FormAnswer> formAnswerList){
-        TestResult testResult = objectiveTestDAO.checkObjectiveTest(formAnswerList);
+        TestResult testResult = new TestResult();
+        testResult.setTotalScore(formAnswerList.size());
+        int score=0;
+        for (FormAnswer f : formAnswerList) {
+            f.setCheck(objectiveTestDAO.checkQuestionbyID(f));
+            if(f.getCheck()) score++;
+            f.setQuestion(objectiveTestDAO.getQuestionbyID(f.getQid()));
+        }
+        testResult.setFormAnswerList(formAnswerList);
+        testResult.setScore(score);
         return testResult;
     }
 }

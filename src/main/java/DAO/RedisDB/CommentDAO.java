@@ -47,6 +47,7 @@ public class CommentDAO extends AbsDAO {
             jedis.hmset("comment:" + comment.getId(), map);
             jedis.zadd("commentzset:objectivetest:" + comment.getObjectiveTest_id(), comment.getDate().getTime(), "" + comment.getId());
         }
+        else System.out.println("Add comment fail");
     }
 
     public static void main(String[] args) {

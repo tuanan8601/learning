@@ -34,8 +34,10 @@ public class CommentDAO extends AbsDAO {
 
         Map<String,String> map = new HashMap<>();
         map.put("id",String.valueOf(comment.getId()));
-        map.put("name",comment.getName());
-        map.put("email",comment.getEmail());
+        if(comment.getName()!=null)
+            map.put("name",comment.getName());
+        if(comment.getEmail()!=null)
+            map.put("email",comment.getEmail());
         map.put("text",comment.getText());
         map.put("objectiveTest_id",String.valueOf(comment.getObjectiveTest_id()));
         map.put("date",String.valueOf(comment.getDate().getTime()));

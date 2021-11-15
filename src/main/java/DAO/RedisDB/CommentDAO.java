@@ -32,19 +32,21 @@ public class CommentDAO extends AbsDAO {
         else comment.setId(Long.parseLong(jedis.get("maxcomment"))+1+"");
         comment.setDate(new Date());
 
-        Map<String,String> map = new HashMap<>();
-        map.put("id",String.valueOf(comment.getId()));
-        if(comment.getName()!=null)
-            map.put("name",comment.getName());
-        if(comment.getEmail()!=null)
-            map.put("email",comment.getEmail());
-        map.put("text",comment.getText());
-        map.put("objectiveTest_id",String.valueOf(comment.getObjectiveTest_id()));
-        map.put("date",String.valueOf(comment.getDate().getTime()));
-        System.out.println(map);
-        jedis.set("maxcomment",comment.getId());
-        jedis.hmset("comment:"+comment.getId(),map);
-        jedis.zadd("commentzset:objectivetest:"+comment.getObjectiveTest_id(),comment.getDate().getTime(),""+comment.getId());
+        if(comment.getObjectiveTest_id()!=null) {
+            Map<String, String> map = new HashMap<>();
+            map.put("id", String.valueOf(comment.getId()));
+            if (comment.getName() != null)
+                map.put("name", comment.getName());
+            if (comment.getEmail() != null)
+                map.put("email", comment.getEmail());
+            map.put("text", comment.getText());
+            map.put("objectiveTest_id", String.valueOf(comment.getObjectiveTest_id()));
+            map.put("date", String.valueOf(comment.getDate().getTime()));
+            System.out.println(map);
+            jedis.set("maxcomment", comment.getId());
+            jedis.hmset("comment:" + comment.getId(), map);
+            jedis.zadd("commentzset:objectivetest:" + comment.getObjectiveTest_id(), comment.getDate().getTime(), "" + comment.getId());
+        }
     }
 
     public static void main(String[] args) {

@@ -32,7 +32,7 @@ public class CommentDAO extends AbsDAO {
         else comment.setId(Long.parseLong(jedis.get("maxcomment"))+1+"");
         comment.setDate(new Date());
 
-        if(comment.getObjectiveTest_id()!=null) {
+        if(comment.getObjectiveTest_id()!=null &comment.getObjectiveTest_id()!="") {
             Map<String, String> map = new HashMap<>();
             map.put("id", String.valueOf(comment.getId()));
             if (comment.getName() != null)

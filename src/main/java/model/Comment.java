@@ -16,6 +16,7 @@ public class Comment {
 //    private ObjectId objectiveTest_id;
     String objectiveTest_id;
     private Date date;
+    private String photoURL;
     public String getTimeAgo() {
         return MyTime.timeAgo(new Date(), date);
     }

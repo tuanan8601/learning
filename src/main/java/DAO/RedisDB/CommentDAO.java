@@ -19,6 +19,7 @@ public class CommentDAO extends AbsDAO {
                 if(c.getKey().equals("email")) comment.setEmail(c.getValue());
                 if(c.getKey().equals("text")) comment.setText(c.getValue());
                 if(c.getKey().equals("objectiveTest_id")) comment.setObjectiveTest_id(c.getValue());
+                if(c.getKey().equals("photoURL")) comment.setPhotoURL(c.getValue());
                 if(c.getKey().equals("date")) comment.setDate(new Date(Long.parseLong(c.getValue())));
             });
             list.add(comment);
@@ -39,6 +40,8 @@ public class CommentDAO extends AbsDAO {
                 map.put("name", comment.getName());
             if (comment.getEmail() != null)
                 map.put("email", comment.getEmail());
+            if (comment.getPhotoURL() != null)
+                map.put("photoURL", comment.getPhotoURL());
             map.put("text", comment.getText());
             map.put("objectiveTest_id", String.valueOf(comment.getObjectiveTest_id()));
             map.put("date", String.valueOf(comment.getDate().getTime()));

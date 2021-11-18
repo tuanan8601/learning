@@ -27,6 +27,21 @@ public class CommentDAO extends AbsDAO {
         return list;
     }
 
+    public Comment getCommentbyID(String objectiveTest_id) {
+        Comment comment = new Comment();
+        List<Map.Entry<String, String>> commentEntry = jedis.hscan("comment:"+objectiveTest_id,0).getResult();
+        commentEntry.forEach(c->{
+            if(c.getKey().equals("id")) comment.setId(c.getValue());
+            if(c.getKey().equals("name")) comment.setName(c.getValue());
+            if(c.getKey().equals("email")) comment.setEmail(c.getValue());
+            if(c.getKey().equals("text")) comment.setText(c.getValue());
+            if(c.getKey().equals("objectiveTest_id")) comment.setObjectiveTest_id(c.getValue());
+            if(c.getKey().equals("photoURL")) comment.setPhotoURL(c.getValue());
+            if(c.getKey().equals("date")) comment.setDate(new Date(Long.parseLong(c.getValue())));
+        });
+        return comment;
+    }
+
     public void addComment(Comment comment) {
         if(jedis.get("maxcomment")==null)
             comment.setId("0");

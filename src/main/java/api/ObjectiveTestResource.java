@@ -20,9 +20,11 @@ public class ObjectiveTestResource {
     public ObjectiveTestResource(){
         this.objectiveTestService=new ObjectiveTestService();
     }
+
+    @Path("/{id}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public ObjectiveTest getObjectiveTestbyID_api(@QueryParam("id") String id){
+    public ObjectiveTest getObjectiveTestbyID_api(@PathParam("id") String id){
         ObjectiveTest objectiveTest = objectiveTestService.getObjectiveTestByID(id);
 //        objectiveTest.setId(null);
 //        objectiveTest.setSubject_id(null);

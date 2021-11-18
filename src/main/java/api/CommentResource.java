@@ -21,6 +21,14 @@ public class CommentResource {
         return comments;
     }
 
+    @Path("/{id}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public Comment getCommentbyId(@PathParam("id") String id){
+        Comment comment = commentService.getCommentbyID(id);
+        return comment;
+    }
+
     @POST
     @Path("/add")
     public String addComment(Comment comment) {

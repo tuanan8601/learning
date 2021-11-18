@@ -15,6 +15,11 @@ public class CommentService {
         return list;
     }
 
+    public Comment getCommentbyID(String objectiveTest_id) {
+        return commentDAO.getCommentbyID(objectiveTest_id);
+    }
+
+
     public String addComment(Comment comment) {
         commentDAO.addComment(comment);
         return "";

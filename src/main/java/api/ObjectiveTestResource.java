@@ -55,7 +55,8 @@ public class ObjectiveTestResource {
         for (String d : forms) {
             if(d.startsWith("time")) time=Integer.parseInt(d.substring(d.indexOf("=") + 1));
             if(d.startsWith("dotime")) dotime=Integer.parseInt(d.substring(d.indexOf("=") + 1));
-            if (d.startsWith("testName")) testName=d.substring(d.indexOf("=") + 1);
+            if (d.startsWith("objectiveTestId"))
+                testName=objectiveTestService.getObjectiveTestByID(d.substring(d.indexOf("=") + 1)).getTestName();
             if (d.startsWith("qid")) {
                 FormAnswer formAnswer = new FormAnswer();
                 String id = d.substring(d.indexOf("=") + 1);

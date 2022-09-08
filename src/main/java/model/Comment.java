@@ -8,13 +8,13 @@ import java.util.Date;
 
 @Data
 public class Comment {
-//    private ObjectId id;
-    String id;
+    private ObjectId id;
+    String commentId;
     private String name;
     private String email;
     private String text;
-//    private ObjectId objectiveTest_id;
-    String objectiveTest_id;
+    private ObjectId objectiveTestId;
+    String objId;
     private Date date;
     private String photoURL;
     public String getTimeAgo() {

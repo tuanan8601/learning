@@ -8,11 +8,11 @@ import java.util.List;
 
 @Data
 public class ObjectiveTest {
-//    ObjectId id;
+    ObjectId id;
     String objectiveTestId;
     String testName;
-//    ObjectId subject_id;
-    String subjectId;
+    ObjectId subject_id;
+    String subjId;
     String poster;
     int time;
     List<Question> questions = new ArrayList<>();

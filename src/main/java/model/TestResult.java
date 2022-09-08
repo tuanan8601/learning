@@ -13,5 +13,4 @@ public class TestResult {
     int totalScore;
     int time;
     int dotime;
-    List<FormAnswer> formAnswerList = new ArrayList<>();
 }

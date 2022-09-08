@@ -1,6 +1,6 @@
 package service;
 
-import DAO.RedisDB.ObjectiveTestDAO;
+import DAO.MongoDB.ObjectiveTestDAO;
 import model.FormAnswer;
 import model.ObjectiveTest;
 import model.Question;
@@ -17,10 +17,10 @@ public class ObjectiveTestService {
         ObjectiveTest objectiveTest = objectiveTestDAO.getObjectiveTestByID(id);
         return objectiveTest;
     }
-    public ObjectiveTest getRandomQuestions(String id,int num){
-        ObjectiveTest objectiveTest = objectiveTestDAO.getRandomQuestions(id,num);
-        return objectiveTest;
-    }
+//    public ObjectiveTest getRandomQuestions(String id,int num){
+//        ObjectiveTest objectiveTest = objectiveTestDAO.getObjectiveTestRandomByID(id,num);
+//        return objectiveTest;
+//    }
     public TestResult checkObjectiveTest(List<FormAnswer> formAnswerList){
         TestResult testResult = new TestResult();
         testResult.setTotalScore(formAnswerList.size());
@@ -28,9 +28,7 @@ public class ObjectiveTestService {
         for (FormAnswer f : formAnswerList) {
             f.setCheck(objectiveTestDAO.checkQuestionbyID(f));
             if(f.getCheck()) score++;
-            f.setQuestion(objectiveTestDAO.getQuestionbyID(f.getQid()));
         }
-        testResult.setFormAnswerList(formAnswerList);
         testResult.setScore(score);
         return testResult;
     }

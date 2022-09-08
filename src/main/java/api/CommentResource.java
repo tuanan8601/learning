@@ -17,8 +17,7 @@ public class CommentResource {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public List<Comment> getComments(@QueryParam("id") String id){
-        List<Comment> comments = commentService.getComments(id);
-        return comments;
+        return commentService.getComments(id);
     }
 
     @Path("/{id}")

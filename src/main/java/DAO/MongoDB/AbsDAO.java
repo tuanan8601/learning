@@ -19,7 +19,7 @@ public abstract class AbsDAO {
 
     MongoDatabase getDB() {
         if (db == null) {
-            ConnectionString connectionString = new ConnectionString("mongodb+srv://tuanan8601:fourin1234@cluster0.u4rda.mongodb.net");
+            ConnectionString connectionString = new ConnectionString("mongodb://localhost:27017");
             MongoClientSettings settings = MongoClientSettings.builder()
                     .applyConnectionString(connectionString)
                     .codecRegistry(fromRegistries(MongoClientSettings.getDefaultCodecRegistry(), fromProviders(PojoCodecProvider.builder().automatic(true).build())))

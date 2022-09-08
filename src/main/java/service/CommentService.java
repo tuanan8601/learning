@@ -1,6 +1,6 @@
 package service;
 
-import DAO.RedisDB.CommentDAO;
+import DAO.MongoDB.CommentDAO;
 import model.Comment;
 
 import java.util.List;
@@ -11,8 +11,7 @@ public class CommentService {
         this.commentDAO = new CommentDAO();
     }
     public List<Comment> getComments(String objectiveTest_id) {
-        List<Comment> list = commentDAO.getComments(objectiveTest_id);
-        return list;
+        return commentDAO.getComments(objectiveTest_id);
     }
 
     public Comment getCommentbyID(String objectiveTest_id) {

@@ -1,6 +1,6 @@
 package service;
 
-import DAO.RedisDB.SubjectDAO;
+import DAO.MongoDB.SubjectDAO;
 import model.Subject;
 import redis.clients.jedis.ScanParams;
 

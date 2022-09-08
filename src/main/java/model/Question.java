@@ -8,6 +8,7 @@ import java.util.List;
 
 @Data
 public class Question {
+    int id;
     String title;
     String image;
     List<Answer> answers = new ArrayList<>();

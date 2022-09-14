@@ -9,7 +9,6 @@ public class FormAnswer {
     String qid;
     char answerHead;
     boolean check;
-    Question question;
 
     public boolean getCheck() {
         return check;

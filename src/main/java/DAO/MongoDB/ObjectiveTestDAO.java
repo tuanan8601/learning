@@ -38,7 +38,7 @@ public class ObjectiveTestDAO extends AbsDAO{
 
     public static void main(String[] args) {
         ObjectiveTestDAO objectiveTestDAO = new ObjectiveTestDAO();
-        System.out.println(objectiveTestDAO.getObjectiveTestByID("630aca623b38422a8e6c0f84"));
+        System.out.println(objectiveTestDAO.getObjectiveTestByID("6321d8456140cf015c925342"));
     }
 
     public boolean checkQuestionbyID(FormAnswer f) {

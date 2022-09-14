@@ -21,12 +21,10 @@ public class ObjectiveTestService {
 //        ObjectiveTest objectiveTest = objectiveTestDAO.getObjectiveTestRandomByID(id,num);
 //        return objectiveTest;
 //    }
-    public TestResult checkObjectiveTest(List<FormAnswer> formAnswerList){
-        TestResult testResult = new TestResult();
-        testResult.setTotalScore(formAnswerList.size());
+    public TestResult checkObjectiveTest(TestResult testResult){
         int score=0;
-        for (FormAnswer f : formAnswerList) {
-            f.setCheck(objectiveTestDAO.checkQuestionbyID(f));
+        for (FormAnswer f : testResult.getFormAnswers()) {
+            f.setCheck(objectiveTestDAO.checkQuestionbyID(testResult.getTestId(),f));
             if(f.getCheck()) score++;
         }
         testResult.setScore(score);

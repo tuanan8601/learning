@@ -4,7 +4,9 @@ import model.Comment;
 import model.FormAnswer;
 import model.ObjectiveTest;
 import model.TestResult;
+import org.bson.types.ObjectId;
 import service.ObjectiveTestService;
+import service.TestResultService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Form;
@@ -12,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Path("/objectivetest")
@@ -43,42 +46,12 @@ public class ObjectiveTestResource {
 
     @POST
     @Path("/check")
-    @Produces({MediaType.APPLICATION_JSON})
-    @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
-    public TestResult checkTest(String testForm) {
-        String testName = new String();
-        int time = 0, dotime = 0;
-        System.out.println(testForm);
-        List<FormAnswer> formAnswerList = new ArrayList<>();
-        List<String> forms = Arrays.asList(testForm.split("&"));
-        System.out.println(forms);
-        for (String d : forms) {
-            if(d.startsWith("time")) time=Integer.parseInt(d.substring(d.indexOf("=") + 1));
-            if(d.startsWith("dotime")) dotime=Integer.parseInt(d.substring(d.indexOf("=") + 1));
-            if (d.startsWith("objectiveTestId"))
-                testName=objectiveTestService.getObjectiveTestByID(d.substring(d.indexOf("=") + 1)).getTestName();
-            if (d.startsWith("qid")) {
-                FormAnswer formAnswer = new FormAnswer();
-                String id = d.substring(d.indexOf("=") + 1);
-                formAnswer.setQid(id);
-                String num = d.substring(d.indexOf("_")+1, d.indexOf("="));
-                String answer=new String();
-                char answerHead='.';
-                if(testForm.indexOf("answer_"+num+"=")>=0){
-                    answer=testForm.substring(testForm.indexOf("answer_"+num+"="));
-                    answer=answer.substring(answer.indexOf("=")+1);
-                    if(answer.indexOf("&")>0) answer=answer.substring(0,answer.indexOf("&"));
-                    answerHead=answer.charAt(0);
-                }
-                formAnswer.setAnswerHead(answerHead);
-                formAnswerList.add(formAnswer);
-            }
-        }
-        System.out.println(formAnswerList);
-        TestResult testResult = objectiveTestService.checkObjectiveTest(formAnswerList);
-        testResult.setTestName(testName);
-        testResult.setTime(time);
-        testResult.setDotime(dotime);
+    public TestResult checkTest(TestResult testResult) {
+        testResult = objectiveTestService.checkObjectiveTest(testResult);
+        testResult.setObjTestId(new ObjectId(testResult.getTestId()));
+        testResult.setCreatedAt(new Date());
+        System.out.println(testResult.toString());
+        (new TestResultService()).addTestResult(testResult);
         return testResult;
     }
 }

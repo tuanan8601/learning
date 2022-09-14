@@ -13,6 +13,6 @@ public class Question {
     String image;
     List<Answer> answers = new ArrayList<>();
     String solution;
-    char solutionHead;
+    String solutionHead;
     String feedback;
 }

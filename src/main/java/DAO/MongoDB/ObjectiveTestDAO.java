@@ -2,8 +2,7 @@ package DAO.MongoDB;
 //package DAO.MongoDB;
 
 import com.mongodb.client.MongoCollection;
-import model.FormAnswer;
-import model.ObjectiveTest;
+import model.*;
 import org.bson.types.ObjectId;
 
 import java.util.List;
@@ -36,12 +35,25 @@ public class ObjectiveTestDAO extends AbsDAO{
 //        return objectiveTest;
 //    }
 
+    public boolean checkQuestionbyID(String testId,FormAnswer f) {
+        MongoCollection<ObjectiveTest> objectiveTests = getDB().getCollection("objective_tests", model.ObjectiveTest.class);
+        ObjectiveTest objectiveTest = objectiveTests.find(eq("_id", new ObjectId(testId))).first();
+        Question question=findQuestionbyid(objectiveTest.getQuestions(),f.getQid());
+        if(question.getSolutionHead().equals(f.getAnswerHead()))
+            return true;
+        else
+            return false;
+    }
+    public Question findQuestionbyid(List<Question> questions,int qid){
+        for (Question q:questions) {
+            if(q.getQid()==qid)
+                return q;
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         ObjectiveTestDAO objectiveTestDAO = new ObjectiveTestDAO();
         System.out.println(objectiveTestDAO.getObjectiveTestByID("6321d8456140cf015c925342"));
-    }
-
-    public boolean checkQuestionbyID(FormAnswer f) {
-        return false;
     }
 }

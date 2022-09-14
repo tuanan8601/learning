@@ -5,8 +5,8 @@ import org.bson.types.ObjectId;
 
 @Data
 public class FormAnswer {
-    String qid;
-    char answerHead;
+    int qid;
+    String answerHead;
     boolean check;
 
     public boolean getCheck() {

@@ -4,6 +4,7 @@ import lombok.Data;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ public class TestResult {
     int totalScore;
     int time;
     int dotime;
+    Date createdAt;
 
     List<FormAnswer> formAnswers;
 }

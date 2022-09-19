@@ -46,12 +46,14 @@ public class ObjectiveTestResource {
 
     @POST
     @Path("/check")
+    @Produces(MediaType.APPLICATION_JSON)
     public TestResult checkTest(TestResult testResult) {
         testResult = objectiveTestService.checkObjectiveTest(testResult);
         testResult.setObjTestId(new ObjectId(testResult.getTestId()));
         testResult.setCreatedAt(new Date());
         System.out.println(testResult.toString());
         (new TestResultService()).addTestResult(testResult);
+        System.out.println("Again: "+testResult.toString());
         return testResult;
     }
 }

@@ -1,9 +1,6 @@
 package api;
 
-import model.ObjectiveTest;
-import model.TestResult;
 import model.result.FullResult;
-import service.ObjectiveTestService;
 import service.TestResultService;
 
 import javax.ws.rs.GET;

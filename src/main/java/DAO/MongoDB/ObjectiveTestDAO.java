@@ -11,15 +11,15 @@ import java.util.Map;
 import static com.mongodb.client.model.Filters.eq;
 
 public class ObjectiveTestDAO extends AbsDAO{
-    public ObjectiveTest getObjectiveTestByID(String id) {
-        MongoCollection<ObjectiveTest> objectiveTests = getDB().getCollection("objective_tests", model.ObjectiveTest.class);
-        ObjectiveTest objectiveTest = objectiveTests.find(eq("_id", new ObjectId(id))).first();
-        objectiveTest.setObjectiveTestId(objectiveTest.getId().toString());
-        objectiveTest.setSubjId(objectiveTest.getSubject_id().toString());
-        return objectiveTest;
+    public Chapter getObjectiveTestByID(String id) {
+        MongoCollection<Chapter> objectiveTests = getDB().getCollection("chapters", Chapter.class);
+        Chapter chapter = objectiveTests.find(eq("_id", new ObjectId(id))).first();
+        chapter.setChapterId(chapter.getId().toString());
+        chapter.setSubjId(chapter.getSubject_id().toString());
+        return chapter;
     }
 
-    public List<ObjectiveTest> searchObjectiveTest(Map filter, Map sort, int limit, int skip) {
+    public List<Chapter> searchObjectiveTest(Map filter, Map sort, int limit, int skip) {
         return null;
     }
 
@@ -28,17 +28,17 @@ public class ObjectiveTestDAO extends AbsDAO{
     }
 
 //    public ObjectiveTest getObjectiveTestRandomByID(String id, int num) {
-//        MongoCollection<ObjectiveTest> objectiveTests = getDB().getCollection("objective_tests", model.ObjectiveTest.class);
+//        MongoCollection<ObjectiveTest> objectiveTests = getDB().getCollection("chapters", model.ObjectiveTest.class);
 //        ObjectiveTest objectiveTest = objectiveTests.find(eq("_id", new ObjectId(id))).first();
 //        objectiveTest.setObjectiveTestId(objectiveTest.getId().toString());
 //        objectiveTest.setSubjId(objectiveTest.getSubject_id().toString());
 //        return objectiveTest;
 //    }
 
-    public boolean checkQuestionbyID(String testId,FormAnswer f) {
-        MongoCollection<ObjectiveTest> objectiveTests = getDB().getCollection("objective_tests", model.ObjectiveTest.class);
-        ObjectiveTest objectiveTest = objectiveTests.find(eq("_id", new ObjectId(testId))).first();
-        Question question=findQuestionbyid(objectiveTest.getQuestions(),f.getQid());
+    public boolean checkQuestionbyID(FormAnswer f) {
+        MongoCollection<Chapter> objectiveTests = getDB().getCollection("chapters", Chapter.class);
+        Chapter chapter = objectiveTests.find(eq("_id", new ObjectId(f.getChapterId()))).first();
+        Question question=findQuestionbyid(chapter.getQuestions(),f.getQid());
         if(question.getSolutionHead().equals(f.getAnswerHead()))
             return true;
         else

@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class ObjectiveTest {
+public class Chapter {
     ObjectId id;
-    String objectiveTestId;
+    String chapterId;
     String testName;
     ObjectId subject_id;
     String subjId;

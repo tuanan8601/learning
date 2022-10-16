@@ -12,8 +12,6 @@ import java.util.Map;
 public class TestResult {
     ObjectId id;
     String formId;
-    ObjectId objTestId;
-    String testId;
     String testName;
     int score;
     int totalScore;

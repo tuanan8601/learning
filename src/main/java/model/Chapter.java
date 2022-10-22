@@ -14,6 +14,5 @@ public class Chapter {
     ObjectId subject_id;
     String subjId;
     String poster;
-    int time;
     List<Question> questions = new ArrayList<>();
 }

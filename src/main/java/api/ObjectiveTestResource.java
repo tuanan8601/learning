@@ -2,6 +2,7 @@ package api;
 
 import model.Chapter;
 import model.TestResult;
+import model.objTest.ObjectiveTest;
 import org.bson.types.ObjectId;
 import service.ObjectiveTestService;
 import service.TestResultService;
@@ -27,15 +28,21 @@ public class ObjectiveTestResource {
         return chapter;
     }
 
-//    @Path("/random")
-//    @GET
-//    @Produces({MediaType.APPLICATION_JSON})
-//    public ObjectiveTest getObjectiveTestbyID_api(@QueryParam("id") String id,@QueryParam("num")String num){
-//        ObjectiveTest objectiveTest = objectiveTestService.getRandomQuestions(id,Integer.parseInt(num));
-////        objectiveTest.setId(null);
-////        objectiveTest.setSubject_id(null);
-//        return objectiveTest;
-//    }
+    @Path("subjecttest/{subjectId}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public ObjectiveTest getSubjectTest (@PathParam("subjectId") String id, @QueryParam("time") int time, @QueryParam("quesperchap") int qpchap){
+        ObjectiveTest objectiveTest = objectiveTestService.getSubjectTest(id,time,qpchap);
+        return objectiveTest;
+    }
+
+    @Path("chaptertest/{chapterId}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public ObjectiveTest getChapterTest (@PathParam("chapterId") String id, @QueryParam("time") int time, @QueryParam("num") int num){
+        ObjectiveTest objectiveTest = objectiveTestService.getChapterTest(id,time,num);;
+        return objectiveTest;
+    }
 
     @POST
     @Path("/check")

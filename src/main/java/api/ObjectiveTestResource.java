@@ -31,7 +31,7 @@ public class ObjectiveTestResource {
     @Path("subjecttest/{subjectId}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public ObjectiveTest getSubjectTest (@PathParam("subjectId") String id, @QueryParam("time") int time, @QueryParam("quesperchap") int qpchap){
+    public ObjectiveTest getSubjectTest (@PathParam("subjectId") String id, @QueryParam("time") int time, @QueryParam("questperchap") int qpchap){
         ObjectiveTest objectiveTest = objectiveTestService.getSubjectTest(id,time,qpchap);
         return objectiveTest;
     }

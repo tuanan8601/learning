@@ -17,13 +17,15 @@ public class UserDAO extends AbsDAO{
         MongoCollection<User> users = getDB().getCollection("users", User.class);
         User user = users.find(eq("_id", new ObjectId(userId))).first();
         user.getSchedule().forEach(d->{
+            if(d.getSubjectId()!=null)
             d.setSubjId(d.getSubjectId().toString());
         });
         return user.getSchedule();
     }
 
     public User updateSchedule(String userId, ScheduleItem scheduleItem){
-        scheduleItem.setSubjectId(new ObjectId(scheduleItem.getSubjId()));
+        if(scheduleItem.getSubjId()!=null)
+            scheduleItem.setSubjectId(new ObjectId(scheduleItem.getSubjId()));
         boolean hasSchedule=false;
         MongoCollection<User> users = getDB().getCollection("users", User.class);
         User user = users.find(eq("_id", new ObjectId(userId))).first();

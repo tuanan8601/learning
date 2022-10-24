@@ -21,4 +21,8 @@ public class UserService {
     public User updateSchedule(String userId, ScheduleItem scheduleItem){
         return userDAO.updateSchedule(userId,scheduleItem);
     }
+
+    public ScheduleItem getSchedulebyWeekdayandShift(String uid, int weekday, int shift) {
+        return userDAO.getSchedulebyWeekdayandShift(uid,weekday,shift);
+    }
 }

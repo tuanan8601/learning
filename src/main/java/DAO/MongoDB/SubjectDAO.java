@@ -37,9 +37,6 @@ public class SubjectDAO extends AbsDAO implements ISubjectDAO {
         MongoCollection<Subject> subjects = getDB().getCollection("subjects", Subject.class);
         subjects.find().forEach(d -> {
             d.setSubjectId(d.getId().toString());
-            d.getObjectiveTest_ids().forEach(i->{
-                d.getObjIds().add(i.toString());
-            });
 //            d.getObjectiveTest_map().forEach((name,objId) -> {
 //                d.getObjectiveTest_name_id().put(name,objId.toString());
 //            });

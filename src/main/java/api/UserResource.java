@@ -27,6 +27,13 @@ public class UserResource {
         return userService.getAllSchedules(uid);
     }
 
+    @Path("/schedule/{uid}/weekday/{wd}/shift/{sh}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public ScheduleItem getSchedulebyDayandShift(@PathParam("uid") String uid,@PathParam("wd") int weekday,@PathParam("sh") int shift){
+        return userService.getSchedulebyWeekdayandShift(uid,weekday,shift);
+    }
+
     @PUT
     @Path("/schedule/{uid}")
     @Produces({MediaType.TEXT_PLAIN})

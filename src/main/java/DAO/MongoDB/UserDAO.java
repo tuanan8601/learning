@@ -16,10 +16,12 @@ public class UserDAO extends AbsDAO{
     public List<ScheduleItem> getAllSchedules(String userId) {
         MongoCollection<User> users = getDB().getCollection("users", User.class);
         User user = users.find(eq("_id", new ObjectId(userId))).first();
-        user.getSchedule().forEach(d->{
-            if(d.getSubjectId()!=null)
-            d.setSubjId(d.getSubjectId().toString());
-        });
+        if(user.getSchedule()!=null) {
+            user.getSchedule().forEach(d -> {
+                if (d.getSubjectId() != null)
+                    d.setSubjId(d.getSubjectId().toString());
+            });
+        }
         return user.getSchedule();
     }
 

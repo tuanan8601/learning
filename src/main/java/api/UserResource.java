@@ -29,8 +29,9 @@ public class UserResource {
 
     @PUT
     @Path("/schedule/{uid}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public User updateSchedule(@PathParam("uid") String userId, ScheduleItem scheduleItem) {
-        return userService.updateSchedule(userId,scheduleItem);
+    @Produces({MediaType.TEXT_PLAIN})
+    public String updateSchedule(@PathParam("uid") String userId, ScheduleItem scheduleItem) {
+        userService.updateSchedule(userId,scheduleItem);
+        return "Sucess!";
     }
 }

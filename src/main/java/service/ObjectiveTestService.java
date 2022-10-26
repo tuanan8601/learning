@@ -71,4 +71,8 @@ public class ObjectiveTestService {
             System.out.println(d);
         });
     }
+
+    public List<Chapter> getChapterbySubjectId(String subjid) {
+        return objectiveTestDAO.getChapterbySubjectId(subjid);
+    }
 }

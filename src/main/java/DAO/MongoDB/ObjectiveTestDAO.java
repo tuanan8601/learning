@@ -108,9 +108,23 @@ public class ObjectiveTestDAO extends AbsDAO{
         return testQuestList;
     }
 
+    public List<Chapter> getChapterbySubjectId(String subjid) {
+        List<Chapter> chapterList= new ArrayList<>();
+        MongoCollection<Chapter> chapters = getDB().getCollection("chapters", Chapter.class);
+        chapters.find(eq("subject_id", new ObjectId(subjid))).forEach(d -> {
+            d.setChapterId(d.getId().toString());
+            d.setSubjId(d.getSubject_id().toString());
+            d.setQuestions(null);
+            chapterList.add(d);
+        });
+        return chapterList;
+    }
+
     public static void main(String[] args) {
         ObjectiveTestDAO objectiveTestDAO = new ObjectiveTestDAO();
 //        System.out.println(objectiveTestDAO.getObjectiveTestByID("6321d8456140cf015c925342"));
-        System.out.println(objectiveTestDAO.getTestQuestbyChapterId("6321d8456140cf015c925342",10));
+//        System.out.println(objectiveTestDAO.getTestQuestbyChapterId("6321d8456140cf015c925342",10));
+//        System.out.println(objectiveTestDAO.getChapterbySubjectId("613445960dba7b0a99ec262c"));
     }
+
 }

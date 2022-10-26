@@ -10,6 +10,7 @@ import service.TestResultService;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.Date;
+import java.util.List;
 
 @Path("/objectivetest")
 public class ObjectiveTestResource {
@@ -54,5 +55,12 @@ public class ObjectiveTestResource {
         (new TestResultService()).addTestResult(testResult);
         System.out.println("Again: "+testResult.toString());
         return testResult;
+    }
+
+    @Path("subject/{subjid}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Chapter> getChapterbySubjectId(@PathParam("subjid") String subjid){
+        return objectiveTestService.getChapterbySubjectId(subjid);
     }
 }

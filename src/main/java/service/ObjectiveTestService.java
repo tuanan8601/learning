@@ -21,7 +21,7 @@ public class ObjectiveTestService {
 
     public ObjectiveTest getSubjectTest(String id, int time, int qpchap) {
         ObjectiveTest objectiveTest = new ObjectiveTest();
-        objectiveTest.setTestName(new SubjectDAO().getSubjectName(id) +" Objective Test");
+        objectiveTest.setTestName(new SubjectDAO().getSubjectName(id));
         objectiveTest.setTime(time);
         objectiveTest.setSubjId(id);
         List<TestQuest> questList = new ArrayList<>();

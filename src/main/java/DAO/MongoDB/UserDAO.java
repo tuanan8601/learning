@@ -8,6 +8,7 @@ import model.User;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
@@ -24,20 +25,33 @@ public class UserDAO extends AbsDAO {
         MongoCollection<User> users = getDB().getCollection("users", User.class);
         User user = users.find(eq("_id", new ObjectId(userId))).first();
         List<ScheduleItem> scheduleItemList = user.getSchedule();
+
         if (user != null) {
-            if (scheduleItemList == null) {
-                scheduleItemList = new ArrayList<>();
-                scheduleItemList.add(scheduleItem);
-                user.setSchedule(scheduleItemList);
-            } else {
-                for (ScheduleItem item : scheduleItemList) {
-                    if (item.getWeekday() == scheduleItem.getWeekday() && item.getShift() == scheduleItem.getShift()) {
-                        int index = scheduleItemList.indexOf(item);
-                        scheduleItemList.set(index, scheduleItem);
-                        hasSchedule = true;
+            if (scheduleItem.getSubject().trim().equals("")&&scheduleItem.getNote().trim().equals("")){
+                if(scheduleItemList!=null){
+                    for (Iterator<ScheduleItem> iterator = scheduleItemList.iterator(); iterator.hasNext(); ) {
+                        ScheduleItem item = iterator.next();
+                        if (item.getWeekday() == scheduleItem.getWeekday() && item.getShift() == scheduleItem.getShift()) {
+                            iterator.remove();
+                        }
                     }
                 }
-                if (!hasSchedule) scheduleItemList.add(scheduleItem);
+            }
+            else {
+                if (scheduleItemList == null) {
+                    scheduleItemList = new ArrayList<>();
+                    scheduleItemList.add(scheduleItem);
+                    user.setSchedule(scheduleItemList);
+                } else {
+                    for (ScheduleItem item : scheduleItemList) {
+                        if (item.getWeekday() == scheduleItem.getWeekday() && item.getShift() == scheduleItem.getShift()) {
+                            int index = scheduleItemList.indexOf(item);
+                            scheduleItemList.set(index, scheduleItem);
+                            hasSchedule = true;
+                        }
+                    }
+                    if (!hasSchedule) scheduleItemList.add(scheduleItem);
+                }
             }
         }
 

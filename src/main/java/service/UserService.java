@@ -25,4 +25,12 @@ public class UserService {
     public ScheduleItem getSchedulebyWeekdayandShift(String uid, int weekday, int shift) {
         return userDAO.getSchedulebyWeekdayandShift(uid,weekday,shift);
     }
+
+    public User getUserbyId(String uid) {
+        return userDAO.getUserbyId(uid);
+    }
+
+    public User findUserbyUsername(String username) {
+        return userDAO.findUserbyUsername(username);
+    }
 }

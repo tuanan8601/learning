@@ -20,6 +20,20 @@ public class UserResource {
         this.userService = new UserService();
     }
 
+    @Path("/{uid}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public User getUserbyId(@PathParam("uid") String uid){
+        return userService.getUserbyId(uid);
+    }
+
+    @Path("username/{username}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public User findUserbyUsername(@PathParam("username") String username){
+        return userService.findUserbyUsername(username);
+    }
+
     @Path("/schedule/{uid}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})

@@ -60,15 +60,7 @@ public class UserDAO extends AbsDAO {
         return user;
     }
 
-    public static void main(String[] args) {
-        UserDAO userDAO = new UserDAO();
-//        ScheduleItem scheduleItem = new ScheduleItem();
-//        scheduleItem.setWeekday(1);
-//        scheduleItem.setShift(4);
-//        scheduleItem.setSubjectId(new ObjectId("613445960dba7b0a99ec262c"));
-//        scheduleItem.setNote("An go 12332!");
-//        userDAO.updateSchedule("6355e9f711868e94a5efcfb0",scheduleItem);
-    }
+
 
     public ScheduleItem getSchedulebyWeekdayandShift(String uid, int weekday, int shift) {
         ScheduleItem scheduleItem = null;
@@ -85,5 +77,32 @@ public class UserDAO extends AbsDAO {
             }
         }
         return scheduleItem;
+    }
+
+    public User getUserbyId(String uid) {
+        MongoCollection<User> users = getDB().getCollection("users", User.class);
+        User user = users.find(eq("_id", new ObjectId(uid))).first();
+        user.setSchedule(null);
+        return user;
+    }
+
+    public User findUserbyUsername(String username) {
+        MongoCollection<User> users = getDB().getCollection("users", User.class);
+        User user = users.find(eq("username", username)).first();
+        user.setSchedule(null);
+        return user;
+    }
+
+    public static void main(String[] args) {
+        UserDAO userDAO = new UserDAO();
+//        System.out.println(userDAO.getUserbyId("6355e9f711868e94a5efcfb0"));
+//        System.out.println(userDAO.findUserbyUsername("tuanan863a3"));
+//        ScheduleItem scheduleItem = new ScheduleItem();
+//        scheduleItem.setWeekday(1);
+//        scheduleItem.setShift(4);
+//        scheduleItem.setSubjectId(new ObjectId("613445960dba7b0a99ec262c"));
+//        scheduleItem.setNote("An go 12332!");
+//        userDAO.updateSchedule("6355e9f711868e94a5efcfb0",scheduleItem);
+
     }
 }

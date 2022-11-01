@@ -1,13 +1,11 @@
 package DAO.MongoDB;
 
 import com.mongodb.client.MongoCollection;
-import model.Chapter;
-import model.ScheduleItem;
-import model.TestResult;
-import model.User;
+import model.*;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -82,15 +80,29 @@ public class UserDAO extends AbsDAO {
     public User getUserbyId(String uid) {
         MongoCollection<User> users = getDB().getCollection("users", User.class);
         User user = users.find(eq("_id", new ObjectId(uid))).first();
-        user.setSchedule(null);
+        if(user!=null) {
+            user.setUid(user.getId().toString());
+            user.setSchedule(null);
+        }
+        System.out.println(user);
         return user;
     }
 
     public User findUserbyUsername(String username) {
         MongoCollection<User> users = getDB().getCollection("users", User.class);
         User user = users.find(eq("username", username)).first();
-        user.setSchedule(null);
+        if(user!=null) {
+            user.setUid(user.getId().toString());
+            user.setSchedule(null);
+        }
+//        System.out.println(user);
         return user;
+    }
+
+    public void addUser(User user) {
+        MongoCollection<User> users = getDB().getCollection("users", User.class);
+        System.out.println(user);
+        users.insertOne(user);
     }
 
     public static void main(String[] args) {
@@ -105,4 +117,5 @@ public class UserDAO extends AbsDAO {
 //        userDAO.updateSchedule("6355e9f711868e94a5efcfb0",scheduleItem);
 
     }
+
 }

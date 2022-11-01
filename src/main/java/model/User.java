@@ -17,5 +17,6 @@ public class User {
     String email;
     Date dateOB;
     String school;
+    String phoneNum;
     List<ScheduleItem> schedule;
 }

@@ -6,6 +6,8 @@ import model.Comment;
 import model.TestResult;
 import model.result.FullResult;
 
+import java.util.List;
+
 public class TestResultService {
     public TestResultDAO testResultDAO;
     public TestResultService(){
@@ -18,5 +20,9 @@ public class TestResultService {
 
     public FullResult getFullResultbyID(String id) {
         return testResultDAO.getFullResultbyID(id);
+    }
+
+    public List<TestResult> getTestResultsbyUid(String uid) {
+        return testResultDAO.getTestResultsbyUid(uid);
     }
 }

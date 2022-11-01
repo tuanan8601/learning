@@ -1,9 +1,6 @@
 package api;
 
-import model.ScheduleItem;
-import model.Subject;
-import model.TestResult;
-import model.User;
+import model.*;
 import service.SubjectService;
 import service.TestResultService;
 import service.UserService;
@@ -34,6 +31,15 @@ public class UserResource {
         return userService.findUserbyUsername(username);
     }
 
+    @POST
+    @Path("/add")
+    @Produces({MediaType.TEXT_PLAIN})
+    public String addUser(User user) {
+        userService.addUser(user);
+        return "Sucess";
+    }
+
+
     @Path("/schedule/{uid}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
@@ -55,4 +61,6 @@ public class UserResource {
         userService.updateSchedule(userId,scheduleItem);
         return "Sucess!";
     }
+
+
 }

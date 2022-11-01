@@ -33,4 +33,8 @@ public class UserService {
     public User findUserbyUsername(String username) {
         return userDAO.findUserbyUsername(username);
     }
+
+    public void addUser(User user) {
+        userDAO.addUser(user);
+    }
 }

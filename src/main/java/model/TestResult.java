@@ -13,6 +13,8 @@ public class TestResult {
     ObjectId id;
     String formId;
     String testName;
+    String userId;
+    ObjectId uid;
     int score;
     int totalScore;
     int time;

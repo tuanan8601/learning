@@ -29,4 +29,8 @@ public class SubjectService {
     public List<Subject> searchSubject(String name, int limit, int skip) {
         return subjectDAO.searchSubject(name,limit,skip);
     }
+
+    public List<Subject> searchSubject(String text) {
+        return subjectDAO.searchSubject(text);
+    }
 }

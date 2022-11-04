@@ -2,7 +2,9 @@ package DAO.MongoDB;//package DAO.MongoDB;
 
 import DAO.ISubjectDAO;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
 import model.Subject;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
@@ -49,7 +51,16 @@ public class SubjectDAO extends AbsDAO implements ISubjectDAO {
     public List<Subject> searchSubject(String name, int limit, int skip) {
         return null;
     }
-
+    public List<Subject> searchSubject(String text) {
+        List<Subject> subjectList= new ArrayList<>();
+        MongoCollection<Subject> subjects = getDB().getCollection("subjects", Subject.class);
+        Bson filter = Filters.text(text);
+        subjects.find(filter).forEach(d -> {
+            d.setSubjectId(d.getId().toString());
+            subjectList.add(d);
+        });
+        return subjectList;
+    }
     @Override
     public long getSubjectNumber(String name) {
         return 0;

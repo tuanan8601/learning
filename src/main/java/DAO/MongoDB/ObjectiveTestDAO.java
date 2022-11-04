@@ -4,6 +4,7 @@ package DAO.MongoDB;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
+import com.mongodb.client.model.Filters;
 import model.*;
 import model.objTest.TestQuest;
 import org.bson.Document;
@@ -127,4 +128,16 @@ public class ObjectiveTestDAO extends AbsDAO{
 //        System.out.println(objectiveTestDAO.getChapterbySubjectId("613445960dba7b0a99ec262c"));
     }
 
+    public List<Chapter> searchChapter(String text) {
+        List<Chapter> chapterList= new ArrayList<>();
+        MongoCollection<Chapter> chapters = getDB().getCollection("chapters", Chapter.class);
+        Bson filter = Filters.text(text);
+        chapters.find(filter).forEach(d -> {
+            d.setChapterId(d.getId().toString());
+            d.setSubjId(d.getSubject_id().toString());
+            d.setQuestions(null);
+            chapterList.add(d);
+        });
+        return chapterList;
+    }
 }

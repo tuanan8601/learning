@@ -1,6 +1,7 @@
 package api;
 
 import model.Chapter;
+import model.Subject;
 import model.TestResult;
 import model.objTest.ObjectiveTest;
 import org.bson.types.ObjectId;
@@ -62,5 +63,12 @@ public class ObjectiveTestResource {
     @Produces({MediaType.APPLICATION_JSON})
     public List<Chapter> getChapterbySubjectId(@PathParam("subjid") String subjid){
         return objectiveTestService.getChapterbySubjectId(subjid);
+    }
+
+    @Path("/search")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Chapter> searchChapter(@QueryParam("text") String text){
+        return objectiveTestService.searchChapter(text);
     }
 }

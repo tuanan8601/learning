@@ -23,17 +23,17 @@ public class SubjectResource {
         return subject;
     }
 
-    @Path("/search")
-    @GET
-    @Produces({MediaType.APPLICATION_JSON})
-    public List<Subject> search(@QueryParam("text") String name){
-        List<Subject> subjects = subjectService.searchSubject(name,0,0);
+//    @Path("/search")
+//    @GET
+//    @Produces({MediaType.APPLICATION_JSON})
+//    public List<Subject> search(@QueryParam("text") String name){
+//        List<Subject> subjects = subjectService.searchSubject(name,0,0);
 //        subjects.forEach(d->{
 //            d.setId(null);
 //            d.setObjectiveTest_map(null);
 //        });
-        return subjects;
-    }
+//        return subjects;
+//    }
 
     @Path("/all")
     @GET
@@ -45,5 +45,12 @@ public class SubjectResource {
 //            d.setObjectiveTest_map(null);
 //        });
         return subjects;
+    }
+
+    @Path("/search")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Subject> searchSubject(@QueryParam("text") String text){
+        return subjectService.searchSubject(text);
     }
 }

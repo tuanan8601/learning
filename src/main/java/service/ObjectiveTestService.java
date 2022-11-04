@@ -4,6 +4,7 @@ import DAO.MongoDB.ObjectiveTestDAO;
 import DAO.MongoDB.SubjectDAO;
 import model.FormAnswer;
 import model.Chapter;
+import model.Subject;
 import model.TestResult;
 import model.objTest.ObjectiveTest;
 import model.objTest.TestQuest;
@@ -74,5 +75,9 @@ public class ObjectiveTestService {
 
     public List<Chapter> getChapterbySubjectId(String subjid) {
         return objectiveTestDAO.getChapterbySubjectId(subjid);
+    }
+
+    public List<Chapter> searchChapter(String text) {
+        return objectiveTestDAO.searchChapter(text);
     }
 }

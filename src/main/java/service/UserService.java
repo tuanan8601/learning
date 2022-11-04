@@ -37,4 +37,8 @@ public class UserService {
     public void addUser(User user) {
         userDAO.addUser(user);
     }
+
+    public void editUser(String uid, User user) {
+        userDAO.editUser(uid, user);
+    }
 }

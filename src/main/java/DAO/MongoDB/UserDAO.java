@@ -84,7 +84,7 @@ public class UserDAO extends AbsDAO {
             user.setUid(user.getId().toString());
             user.setSchedule(null);
         }
-        System.out.println(user);
+//        System.out.println(user);
         return user;
     }
 
@@ -103,6 +103,7 @@ public class UserDAO extends AbsDAO {
         MongoCollection<User> users = getDB().getCollection("users", User.class);
         System.out.println(user);
         users.insertOne(user);
+        user.setUid(user.getId().toString());
     }
 
     public static void main(String[] args) {
@@ -118,4 +119,9 @@ public class UserDAO extends AbsDAO {
 
     }
 
+    public void editUser(String uid, User user) {
+        MongoCollection<User> users = getDB().getCollection("users", User.class);
+        user.setId(new ObjectId(user.getUid()));
+        users.replaceOne(eq("_id", new ObjectId(uid)), user);
+    }
 }

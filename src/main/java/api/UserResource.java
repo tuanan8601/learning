@@ -39,6 +39,13 @@ public class UserResource {
         return user.getUid();
     }
 
+    @PUT
+    @Path("/{uid}")
+    @Produces({MediaType.TEXT_PLAIN})
+    public String editUser(@PathParam("uid") String uid, User user) {
+        userService.editUser(uid,user);
+        return "Success";
+    }
 
     @Path("/schedule/{uid}")
     @GET

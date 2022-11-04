@@ -36,7 +36,7 @@ public class UserResource {
     @Produces({MediaType.TEXT_PLAIN})
     public String addUser(User user) {
         userService.addUser(user);
-        return "Sucess";
+        return user.getUid();
     }
 
 

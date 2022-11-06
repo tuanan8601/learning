@@ -82,7 +82,6 @@ public class UserDAO extends AbsDAO {
         User user = users.find(eq("_id", new ObjectId(uid))).first();
         if(user!=null) {
             user.setUid(user.getId().toString());
-            user.setSchedule(null);
         }
 //        System.out.println(user);
         return user;

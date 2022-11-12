@@ -26,13 +26,20 @@ public class TestResultDAO extends AbsDAO{
         TestResult testResult = testResults.find(eq("_id", new ObjectId(id))).first();
         for (FormAnswer formAnswer:testResult.getFormAnswers()) {
             Chapter chapter = new ObjectiveTestDAO().getObjectiveTestByID(formAnswer.getChapterId());
-            for (Question question: chapter.getQuestions()) {
-                if(formAnswer.getQid() == question.getQid()){
-                    Result result = new Result();
-                    result.setQuestion(question);
-                    result.setFormAnswer(formAnswer);
-                    fullResult.getResultList().add(result);
+            if(chapter!=null) {
+                for (Question question : chapter.getQuestions()) {
+                    if (formAnswer.getQid() == question.getQid()) {
+                        Result result = new Result();
+                        result.setQuestion(question);
+                        result.setFormAnswer(formAnswer);
+                        fullResult.getResultList().add(result);
+                    }
                 }
+            }
+            else {
+                Result result = new Result();
+                result.setFormAnswer(formAnswer);
+                fullResult.getResultList().add(result);
             }
         }
         testResult.setFormAnswers(null);

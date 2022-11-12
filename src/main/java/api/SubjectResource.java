@@ -1,4 +1,5 @@
 package api;
+
 import model.Subject;
 import service.SubjectService;
 
@@ -23,6 +24,26 @@ public class SubjectResource {
         return subject;
     }
 
+    @POST
+    @Path("/add")
+    public String addSubject(Subject subject) {
+        System.out.println(subject);
+        subjectService.addSubject(subject);
+        return "";
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public String deleteSubject(@PathParam("id") String subjectId){
+        subjectService.deleteSubject(subjectId);
+        return "";
+    }
+
+    @PUT
+    @Path("/{id}")
+    public Subject updateSubject(@PathParam("id") String subjectId,Subject subject){
+        return subjectService.updateSubject(subjectId,subject);
+    }
 //    @Path("/search")
 //    @GET
 //    @Produces({MediaType.APPLICATION_JSON})

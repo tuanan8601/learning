@@ -2,10 +2,7 @@ package service;
 
 import DAO.MongoDB.ObjectiveTestDAO;
 import DAO.MongoDB.SubjectDAO;
-import model.FormAnswer;
-import model.Chapter;
-import model.Subject;
-import model.TestResult;
+import model.*;
 import model.objTest.ObjectiveTest;
 import model.objTest.TestQuest;
 
@@ -48,7 +45,7 @@ public class ObjectiveTestService {
         Chapter chapter = objectiveTestDAO.getObjectiveTestByID(id);
         return chapter;
     }
-//    public ObjectiveTest getRandomQuestions(String id,int num){
+    //    public ObjectiveTest getRandomQuestions(String id,int num){
 //        ObjectiveTest objectiveTest = objectiveTestDAO.getObjectiveTestRandomByID(id,num);
 //        return objectiveTest;
 //    }
@@ -79,5 +76,33 @@ public class ObjectiveTestService {
 
     public List<Chapter> searchChapter(String text) {
         return objectiveTestDAO.searchChapter(text);
+    }
+
+    public Question getQuestionbyQid(String id, int qid) {
+        return objectiveTestDAO.getQuestionbyQid(id,qid);
+    }
+
+    public void addChapter(Chapter chapter) {
+        objectiveTestDAO.addChapter(chapter);
+    }
+
+    public void deleteChapter(String chapId) {
+        objectiveTestDAO.deleteChapter(chapId);
+    }
+
+    public Chapter updateSubject(String chapId, Chapter chapter) {
+        return objectiveTestDAO.updateSubject(chapId, chapter);
+    }
+
+    public void addQuestion(String chapId, Question question) {
+        objectiveTestDAO.addQuestion(chapId, question);
+    }
+
+    public void deleteQuestion(String chapId, int qid) {
+        objectiveTestDAO.deleteQuestion(chapId,qid);
+    }
+
+    public Question updateQuestion(String chapId, int qid, Question question) {
+        return objectiveTestDAO.updateQuestion(chapId,qid,question);
     }
 }

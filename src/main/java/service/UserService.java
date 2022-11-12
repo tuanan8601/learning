@@ -41,4 +41,12 @@ public class UserService {
     public void editUser(String uid, User user) {
         userDAO.editUser(uid, user);
     }
+
+    public List<ScheduleItem> getSchedulebyWeekday(String uid, int weekday) {
+        return userDAO.getSchedulebyWeekday(uid,weekday);
+    }
+
+    public List<User> getAllUsers() {
+        return userDAO.getAllUsers();
+    }
 }

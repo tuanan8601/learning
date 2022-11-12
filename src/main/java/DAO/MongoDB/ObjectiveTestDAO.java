@@ -21,8 +21,10 @@ public class ObjectiveTestDAO extends AbsDAO{
     public Chapter getObjectiveTestByID(String id) {
         MongoCollection<Chapter> objectiveTests = getDB().getCollection("chapters", Chapter.class);
         Chapter chapter = objectiveTests.find(eq("_id", new ObjectId(id))).first();
-        chapter.setChapterId(chapter.getId().toString());
-        chapter.setSubjId(chapter.getSubject_id().toString());
+        if(chapter!=null) {
+            chapter.setChapterId(chapter.getId().toString());
+            chapter.setSubjId(chapter.getSubject_id().toString());
+        }
         return chapter;
     }
 
@@ -139,5 +141,74 @@ public class ObjectiveTestDAO extends AbsDAO{
             chapterList.add(d);
         });
         return chapterList;
+    }
+
+    public Question getQuestionbyQid(String id, int qid) {
+        MongoCollection<Chapter> objectiveTests = getDB().getCollection("chapters", Chapter.class);
+        Chapter chapter = objectiveTests.find(eq("_id", new ObjectId(id))).first();
+        Question question = new Question();
+        if(chapter!=null) {
+            for (Question quest: chapter.getQuestions()) {
+                if(quest.getQid()==qid){
+                    question=quest;
+                }
+            }
+        }
+        return question;
+    }
+
+    public void addChapter(Chapter chapter) {
+        MongoCollection<Chapter> chapters = getDB().getCollection("chapters", Chapter.class);
+        if(chapter.getSubjId()!=null) chapter.setSubject_id(new ObjectId(chapter.getSubjId()));
+        chapters.insertOne(chapter);
+    }
+
+    public void deleteChapter(String chapId) {
+        MongoCollection<Chapter> chapters = getDB().getCollection("chapters", Chapter.class);
+        chapters.deleteOne(eq("_id",new ObjectId(chapId)));
+    }
+
+    public Chapter updateSubject(String chapId, Chapter chapter) {
+        MongoCollection<Chapter> chapters = getDB().getCollection("chapters", Chapter.class);
+        chapter.setId(new ObjectId(chapter.getChapterId()));
+        chapter.setSubject_id(new ObjectId(chapter.getSubjId()));
+        chapters.replaceOne(eq("_id",new ObjectId(chapId)),chapter);
+        return chapter;
+    }
+
+    public void addQuestion(String chapId, Question question) {
+        MongoCollection<Chapter> objectiveTests = getDB().getCollection("chapters", Chapter.class);
+        Chapter chapter = objectiveTests.find(eq("_id", new ObjectId(chapId))).first();
+        List<Question> questionList = chapter.getQuestions();
+        question.setQid(newId(questionList));
+        chapter.getQuestions().add(question);
+        objectiveTests.replaceOne(eq("_id",new ObjectId(chapId)),chapter);
+    }
+
+    public int newId(List<Question> questionList){
+        List<Integer> ids = new ArrayList<>();
+        for (Question q:questionList) {
+            ids.add(q.getQid());
+        }
+        if(ids.size()<=0) return 0;
+        return Collections.max(ids)+1;
+    }
+
+    public void deleteQuestion(String chapId, int qid) {
+        MongoCollection<Chapter> objectiveTests = getDB().getCollection("chapters", Chapter.class);
+        Chapter chapter = objectiveTests.find(eq("_id", new ObjectId(chapId))).first();
+        List<Question> questionList = chapter.getQuestions();
+        questionList.remove(findQuestionbyid(questionList,qid));
+        objectiveTests.replaceOne(eq("_id",new ObjectId(chapId)),chapter);
+    }
+
+    public Question updateQuestion(String chapId, int qid, Question question) {
+        MongoCollection<Chapter> objectiveTests = getDB().getCollection("chapters", Chapter.class);
+        Chapter chapter = objectiveTests.find(eq("_id", new ObjectId(chapId))).first();
+        List<Question> questionList = chapter.getQuestions();
+        question.setQid(qid);
+        questionList.set(questionList.indexOf(findQuestionbyid(questionList,qid)),question);
+        objectiveTests.replaceOne(eq("_id",new ObjectId(chapId)),chapter);
+        return question;
     }
 }

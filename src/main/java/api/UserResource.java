@@ -24,6 +24,13 @@ public class UserResource {
         return userService.getUserbyId(uid);
     }
 
+    @Path("/all")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<User> getAllUsers(){
+        return userService.getAllUsers();
+    }
+
     @Path("username/{username}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
@@ -59,6 +66,13 @@ public class UserResource {
     @Produces({MediaType.APPLICATION_JSON})
     public ScheduleItem getSchedulebyDayandShift(@PathParam("uid") String uid,@PathParam("wd") int weekday,@PathParam("sh") int shift){
         return userService.getSchedulebyWeekdayandShift(uid,weekday,shift);
+    }
+
+    @Path("/schedule/{uid}/weekday/{wd}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<ScheduleItem> getSchedulebyDay(@PathParam("uid") String uid,@PathParam("wd") int weekday){
+        return userService.getSchedulebyWeekday(uid,weekday);
     }
 
     @PUT

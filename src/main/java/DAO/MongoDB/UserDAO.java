@@ -123,4 +123,31 @@ public class UserDAO extends AbsDAO {
         user.setId(new ObjectId(user.getUid()));
         users.replaceOne(eq("_id", new ObjectId(uid)), user);
     }
+
+    public List<ScheduleItem> getSchedulebyWeekday(String uid, int weekday) {
+        List<ScheduleItem> scheduleItems = new ArrayList<>();
+        MongoCollection<User> users = getDB().getCollection("users", User.class);
+        User user = users.find(eq("_id", new ObjectId(uid))).first();
+        List<ScheduleItem> scheduleItemList = user.getSchedule();
+        if (user != null) {
+            if (scheduleItemList != null) {
+                for (ScheduleItem item : scheduleItemList) {
+                    if (item.getWeekday() == weekday) {
+                        scheduleItems.add(item);
+                    }
+                }
+            }
+        }
+        return scheduleItems;
+    }
+
+    public List<User> getAllUsers() {
+        List<User> userList= new ArrayList<>();
+        MongoCollection<User> users = getDB().getCollection("users", User.class);
+        users.find().forEach(d -> {
+            d.setUid(d.getId().toString());
+            userList.add(d);
+        });
+        return userList;
+    }
 }

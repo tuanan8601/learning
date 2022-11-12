@@ -33,4 +33,16 @@ public class SubjectService {
     public List<Subject> searchSubject(String text) {
         return subjectDAO.searchSubject(text);
     }
+
+    public void addSubject(Subject subject) {
+        subjectDAO.addSubject(subject);
+    }
+
+    public void deleteSubject(String subjectId) {
+        subjectDAO.deleteSubject(subjectId);
+    }
+
+    public Subject updateSubject(String subjectId, Subject subject) {
+        return subjectDAO.updateSubject(subjectId,subject);
+    }
 }

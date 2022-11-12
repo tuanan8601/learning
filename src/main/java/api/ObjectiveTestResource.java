@@ -3,8 +3,11 @@ package api;
 import model.*;
 import model.objTest.ObjectiveTest;
 import org.bson.types.ObjectId;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import service.ObjectiveTestService;
 import service.TestResultService;
+import utils.FileUtils;
 //import utils.FileUtils;
 
 import javax.activation.MimetypesFileTypeMap;
@@ -125,40 +128,40 @@ public class ObjectiveTestResource {
     }
 
 
-//    @GET
-//    @Path("/download/{type}")
-//    public Response downloadFile(@PathParam("type") String fileType) {
-//
-//        String fileName = "test." + fileType;
-//        File file = new File(BASE_FOLDER + "download/" + fileName);
-//
-//        /* Finding MIME type for explicitly setting MIME */
-//        String mimeType = new MimetypesFileTypeMap().getContentType(file);
-//
-//        Response.ResponseBuilder responseBuilder = Response.ok(file, mimeType);
-//        responseBuilder.header("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-//        return responseBuilder.build();
-//    }
-//
-//    public static final String BASE_FOLDER = "D:/Du_an_on_thi/txt/";
+    @GET
+    @Path("/download/{type}")
+    public Response downloadFile(@PathParam("type") String fileType) {
 
-//    @POST
-//    @Path("/upload")
-//    @Consumes(MediaType.MULTIPART_FORM_DATA)
-//    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-//    public Response uploadFile( //
-//                                @FormDataParam("uploadFile") InputStream fileInputStream,
-//                                @FormDataParam("uploadFile") FormDataContentDisposition fileFormDataContentDisposition) {
-//
-//        String fileName = fileFormDataContentDisposition.getFileName();
-//        File uploadedFile = FileUtils.storeFile(fileInputStream, BASE_FOLDER, fileName);
-//
-//        FileUploadResponse entity = new FileUploadResponse();
-//        entity.setFileName(uploadedFile.getName());
-//        entity.setFileSizeInByte(uploadedFile.length());
-//        entity.setCreatedDate(new Date());
-//        System.out.println("entity: " + entity);
-//
-//        return Response.ok("File uploaded successfully at " + uploadedFile.getPath()).entity(entity).build();
-//    }
+        String fileName = "test." + fileType;
+        File file = new File(BASE_FOLDER + "download/" + fileName);
+
+        /* Finding MIME type for explicitly setting MIME */
+        String mimeType = new MimetypesFileTypeMap().getContentType(file);
+
+        Response.ResponseBuilder responseBuilder = Response.ok(file, mimeType);
+        responseBuilder.header("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+        return responseBuilder.build();
+    }
+
+    public static final String BASE_FOLDER = "D:/Du_an_on_thi/txt/";
+
+    @POST
+    @Path("/upload")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    public Response uploadFile(
+                                @FormDataParam("uploadFile") InputStream fileInputStream,
+                                @FormDataParam("uploadFile") FormDataContentDisposition fileFormDataContentDisposition) {
+
+        String fileName = fileFormDataContentDisposition.getFileName();
+        File uploadedFile = FileUtils.storeFile(fileInputStream, BASE_FOLDER, fileName);
+
+        FileUploadResponse entity = new FileUploadResponse();
+        entity.setFileName(uploadedFile.getName());
+        entity.setFileSizeInByte(uploadedFile.length());
+        entity.setCreatedDate(new Date());
+        System.out.println("entity: " + entity);
+
+        return Response.ok("File uploaded successfully at " + uploadedFile.getPath()).entity(entity).build();
+    }
 }

@@ -33,4 +33,11 @@ public class TestResultResource {
     public List<TestResult> getTestResultsbyUid(@PathParam("uid") String uid){
         return testResultService.getTestResultsbyUid(uid);
     }
+
+    @Path("/type/{type}/id/{csid}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<TestResult> getTestResultsbyTypeCsId(@PathParam("type") int type,@PathParam("csid") String csId){
+        return testResultService.getTestResultsbyTypeCsId(type,csId);
+    }
 }

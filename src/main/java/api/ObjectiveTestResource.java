@@ -8,6 +8,7 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 import service.ObjectiveTestService;
 import service.TestResultService;
 import utils.FileUtils;
+import utils.ParseQuestion;
 //import utils.FileUtils;
 
 import javax.activation.MimetypesFileTypeMap;
@@ -15,7 +16,9 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
 
@@ -69,6 +72,15 @@ public class ObjectiveTestResource {
     @Path("/{id}/question/{qid}")
     public String deleteQuestion(@PathParam("id") String chapId,@PathParam("qid") int qid){
         objectiveTestService.deleteQuestion(chapId,qid);
+        return "";
+    }
+
+    @PUT
+    @Path("/{id}/question/many")
+    public String deleteQuestionMany(@PathParam("id") String chapId,List<Integer> listId){
+        listId.forEach(id->{
+            objectiveTestService.deleteQuestion(chapId,id);
+        });
         return "";
     }
 
@@ -127,41 +139,21 @@ public class ObjectiveTestResource {
         return objectiveTestService.getQuestionbyQid(id,qid);
     }
 
-
-    @GET
-    @Path("/download/{type}")
-    public Response downloadFile(@PathParam("type") String fileType) {
-
-        String fileName = "test." + fileType;
-        File file = new File(BASE_FOLDER + "download/" + fileName);
-
-        /* Finding MIME type for explicitly setting MIME */
-        String mimeType = new MimetypesFileTypeMap().getContentType(file);
-
-        Response.ResponseBuilder responseBuilder = Response.ok(file, mimeType);
-        responseBuilder.header("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-        return responseBuilder.build();
-    }
-
     public static final String BASE_FOLDER = "D:/Du_an_on_thi/txt/";
 
     @POST
-    @Path("/upload")
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-    public Response uploadFile(
-                                @FormDataParam("uploadFile") InputStream fileInputStream,
-                                @FormDataParam("uploadFile") FormDataContentDisposition fileFormDataContentDisposition) {
-
-        String fileName = fileFormDataContentDisposition.getFileName();
-        File uploadedFile = FileUtils.storeFile(fileInputStream, BASE_FOLDER, fileName);
-
-        FileUploadResponse entity = new FileUploadResponse();
-        entity.setFileName(uploadedFile.getName());
-        entity.setFileSizeInByte(uploadedFile.length());
-        entity.setCreatedDate(new Date());
-        System.out.println("entity: " + entity);
-
-        return Response.ok("File uploaded successfully at " + uploadedFile.getPath()).entity(entity).build();
+    @Path("/upload/{id}")
+    public String uploadFile(@PathParam("id") String chapId, TextFile textFile) {
+//        System.out.println(textFile);
+        ParseQuestion.parseQuestion(textFile.getContent()).forEach(q->{
+            System.out.println(q);
+            objectiveTestService.addQuestion(chapId,q);
+        });
+//        try (PrintWriter out = new PrintWriter(BASE_FOLDER+textFile.getName()+".txt")) {
+//            out.println(textFile.getContent());
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+        return "Sucess";
     }
 }

@@ -2,8 +2,8 @@
 
 import DAO.ISubjectDAO;
 import model.Subject;
-import redis.clients.jedis.ScanParams;
-import redis.clients.jedis.Tuple;
+//import redis.clients.jedis.ScanParams;
+//import redis.clients.jedis.Tuple;
 
 import java.util.*;
 

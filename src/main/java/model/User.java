@@ -15,6 +15,7 @@ public class User {
     String displayName;
     String photoURL;
     String email;
+    String role;
     Date dateOB;
     String school;
     String phoneNum;

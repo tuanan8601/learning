@@ -13,6 +13,9 @@ public class TestResult {
     ObjectId id;
     String formId;
     String testName;
+    ObjectId chapSubjId;
+    String csId;
+    int type;
     String userId;
     ObjectId uid;
     int score;

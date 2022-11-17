@@ -5,17 +5,20 @@ import com.mongodb.client.MongoCollection;
 import model.*;
 import model.result.FullResult;
 import model.result.Result;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 
 public class TestResultDAO extends AbsDAO{
     public void addTestResult(TestResult testResult){
         MongoCollection<TestResult> testResults = getDB().getCollection("test_results", TestResult.class);
         testResult.setUid(new ObjectId(testResult.getUserId()));
+        testResult.setChapSubjId(new ObjectId(testResult.getCsId()));
         testResults.insertOne(testResult);
         testResult.setFormId(testResult.getId().toString());
     }
@@ -43,6 +46,8 @@ public class TestResultDAO extends AbsDAO{
             }
         }
         testResult.setFormAnswers(null);
+        testResult.setCsId(testResult.getChapSubjId().toString());
+        testResult.setUserId(testResult.getUid().toString());
         fullResult.setTestResult(testResult);
         return fullResult;
     }
@@ -57,6 +62,25 @@ public class TestResultDAO extends AbsDAO{
                 d.setFormAnswers(null);
                 d.setFormId(d.getId().toString());
                 d.setUserId(d.getUid().toString());
+                d.setCsId(d.getChapSubjId().toString());
+                testResultList.add(d);
+            });
+        }
+        System.out.println(testResultList);
+        return testResultList;
+    }
+
+    public List<TestResult> getTestResultsbyTypeCsId(int type, String csId) {
+        List<TestResult> testResultList = new ArrayList<>();
+        MongoCollection<TestResult> testResults = getDB().getCollection("test_results", TestResult.class);
+        FindIterable<TestResult> testResultFindIterable = testResults.find(and(eq("type",type),eq("chapSubjId",new ObjectId(csId)))).sort(eq("createdAt",-1));
+
+        if(testResultFindIterable!=null) {
+            testResultFindIterable.forEach(d -> {
+                d.setFormAnswers(null);
+                d.setFormId(d.getId().toString());
+                d.setUserId(d.getUid().toString());
+                d.setCsId(d.getChapSubjId().toString());
                 testResultList.add(d);
             });
         }

@@ -2,7 +2,7 @@ package service;
 
 import DAO.MongoDB.SubjectDAO;
 import model.Subject;
-import redis.clients.jedis.ScanParams;
+//import redis.clients.jedis.ScanParams;
 
 import java.util.ArrayList;
 import java.util.List;

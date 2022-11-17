@@ -6,7 +6,7 @@ import model.Comment;
 import model.Subject;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-import redis.clients.jedis.Tuple;
+//import redis.clients.jedis.Tuple;
 
 import java.util.*;
 

@@ -25,4 +25,8 @@ public class TestResultService {
     public List<TestResult> getTestResultsbyUid(String uid) {
         return testResultDAO.getTestResultsbyUid(uid);
     }
+
+    public List<TestResult> getTestResultsbyTypeCsId(int type, String csId) {
+        return testResultDAO.getTestResultsbyTypeCsId(type,csId);
+    }
 }

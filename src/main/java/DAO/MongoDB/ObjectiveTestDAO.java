@@ -114,7 +114,7 @@ public class ObjectiveTestDAO extends AbsDAO{
     public List<Chapter> getChapterbySubjectId(String subjid) {
         List<Chapter> chapterList= new ArrayList<>();
         MongoCollection<Chapter> chapters = getDB().getCollection("chapters", Chapter.class);
-        chapters.find(eq("subject_id", new ObjectId(subjid))).forEach(d -> {
+        chapters.find(eq("subject_id", new ObjectId(subjid))).sort(eq("testName",1)).forEach(d -> {
             d.setChapterId(d.getId().toString());
             d.setSubjId(d.getSubject_id().toString());
             d.setQuestions(null);

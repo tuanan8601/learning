@@ -144,7 +144,7 @@ public class UserDAO extends AbsDAO {
     public List<User> getAllUsers() {
         List<User> userList= new ArrayList<>();
         MongoCollection<User> users = getDB().getCollection("users", User.class);
-        users.find().forEach(d -> {
+        users.find().sort(eq("displayName",1)).forEach(d -> {
             d.setUid(d.getId().toString());
             userList.add(d);
         });
